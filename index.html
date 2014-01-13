@@ -3,6 +3,45 @@
 <head>
   <meta charset="utf-8">
   <title>Modular Type CSS Generator</title>
+  <style>
+  html {
+    font: normal 100%/1.5 Georgia,serif;
+  }
+  body {
+    margin: 0 auto;
+    padding: 1.5rem;
+    width: 35rem;
+  }
+  h1, h2 {
+    margin: 0 0 1.5rem;
+    font-size: 1.5rem;
+  }
+  h2 {
+    font-size: 1.25rem;
+  }
+  form {
+    margin: 0 0 1.5rem;
+    padding: 0;
+  }
+  form div {
+    float: left;
+    margin: 0 0 1.5rem;
+    overflow: hidden;
+    width: 33.333%;
+    text-align: center;
+  }
+  label {
+    display: block;
+  }
+  input {
+    font-size: 1.5rem;
+    width: 4em;
+  }
+  textarea {
+    width: 100%;
+    height: 12rem;
+  }
+  </style>
 </head>
 <body>
 
@@ -11,7 +50,7 @@
 <form id="form">
   <div>
     <label for="base-font-size">Base Font Size</label>
-    <input type="number" id="base-font-size">
+    <input type="number" id="base-font-size" autofocus>
   </div>
   <div>
     <label for="base-line-height">Base Line Height</label>
