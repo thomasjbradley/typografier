@@ -2,14 +2,16 @@
 <html lang="en-ca">
 <head>
   <meta charset="utf-8">
-  <title>Modular Type Generator</title>
+  <title>Modular Type CSS Generator</title>
 </head>
 <body>
 
-<form>
+<h1>Modular Type CSS Generator</h1>
+
+<form id="form">
   <div>
-    <label for="base-font">Base Font Size</label>
-    <input type="number" id="base-font">
+    <label for="base-font-size">Base Font Size</label>
+    <input type="number" id="base-font-size">
   </div>
   <div>
     <label for="base-line-height">Base Line Height</label>
@@ -20,6 +22,94 @@
     <input type="number" id="type-scale">
   </div>
 </form>
+
+<h2>Resulting CSS</h2>
+
+<textarea id="output"></textarea>
+
+<div id="css-base" hidden>html {
+  font: normal {{base-font}}%/{{base-line-height}} Georgia,serif; /* {{base-font-size-px}}px/{{base-line-height-px}}px */
+}
+
+h1, h2, h3, h4, h5, h6,
+p, ul, ol, dl,
+blockquote, table, hr {
+  margin: 0 0 {{base-line-height}}rem;
+}
+</div>
+
+<div id="css-element" hidden>
+{{selectors}} {
+  font-size: {{font-size}}rem;
+  line-height: {{line-height}};
+}
+</div>
+
+<script>
+  var sizes = [
+    { sel: ['.yotta'], power: 7},
+    { sel: ['.zetta'], power: 6},
+    { sel: ['h1', '.exa'], power: 5},
+    { sel: ['h2', '.peta'], power: 4},
+    { sel: ['h3', '.tera'], power: 3},
+    { sel: ['h4', '.giga'], power: 2},
+    { sel: ['h5', '.mega'], power: 1},
+    { sel: ['h6', '.kilo'], power: 0},
+    { sel: ['small', '.milli'], power: -1},
+    { sel: ['.micro'], power: -2},
+  ],
+  inputs = {
+    baseFontSize: document.getElementById('base-font-size'),
+    baseLineHeight: document.getElementById('base-line-height'),
+    typeScale: document.getElementById('type-scale'),
+    output: document.getElementById('output')
+  },
+  templates = {
+    base: document.getElementById('css-base').innerText,
+    element: document.getElementById('css-element').innerText
+  },
+  validateEvents = function validateEvents (e) {
+    if (inputs.baseFontSize.value && inputs.baseLineHeight.value && inputs.typeScale.value) {
+      prepareCSS(inputs.baseFontSize.value, inputs.baseLineHeight.value, inputs.typeScale.value);
+    }
+  },
+  calculateValues = function calculateValues (baseFontSize, baseLineHeight, typeScale, power) {
+    var fontSize = (baseFontSize * Math.pow(typeScale, power)) / baseFontSize,
+      lineHeight = baseLineHeight / baseFontSize
+
+    return {
+      fontSize: fontSize,
+      lineHeight: Math.ceil(fontSize / lineHeight) * (lineHeight / fontSize)
+    };
+  },
+  prepareCSS = function prepareCSS (baseFontSize, baseLineHeight, typeScale) {
+    var fontSize = (baseFontSize / 16) * 100,
+      lineHeight = baseLineHeight / baseFontSize,
+      css = [
+        templates.base
+          .replace('{{base-font}}', fontSize)
+          .replace(/\{\{base\-line\-height\}\}/g, lineHeight)
+          .replace('{{base-font-size-px}}', baseFontSize)
+          .replace('{{base-line-height-px}}', baseLineHeight)
+      ];
+
+    sizes.forEach(function (elem, index, arr) {
+      var vals = calculateValues(baseFontSize, baseLineHeight, typeScale, sizes[index].power);
+      css.push(
+        templates.element
+          .replace('{{selectors}}', sizes[index].sel.join(', '))
+          .replace('{{font-size}}', vals.fontSize.toFixed(4))
+          .replace('{{line-height}}', vals.lineHeight.toFixed(4))
+      );
+    });
+
+    inputs.output.value = css.join('');
+  };
+
+  inputs.baseFontSize.addEventListener('change', validateEvents);
+  inputs.baseLineHeight.addEventListener('change', validateEvents);
+  inputs.typeScale.addEventListener('change', validateEvents);
+</script>
 
 </body>
 </html>
