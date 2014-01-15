@@ -104,8 +104,8 @@ blockquote, table, hr {
     output: document.getElementById('output')
   },
   templates = {
-    base: document.getElementById('css-base').innerText,
-    element: document.getElementById('css-element').innerText
+    base: document.getElementById('css-base').innerHTML,
+    element: document.getElementById('css-element').innerHTML
   },
   validateEvents = function validateEvents (e) {
     if (inputs.baseFontSize.value && inputs.baseLineHeight.value && inputs.typeScale.value) {
