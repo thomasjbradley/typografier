@@ -2,75 +2,56 @@
 <html lang="en-ca">
 <head>
   <meta charset="utf-8">
-  <title>Modular Type CSS Generator</title>
-  <style>
-  html {
-    font: normal 100%/1.5 sans-serif;
-  }
-  body {
-    margin: 0 auto;
-    padding: 1.5rem;
-    width: 35rem;
-  }
-  h1, h2 {
-    margin: 0 0 1.5rem;
-    font-size: 1.5rem;
-  }
-  h2 {
-    font-size: 1.25rem;
-  }
-  form {
-    margin: 0 0 1.5rem;
-    padding: 0;
-  }
-  form div {
-    float: left;
-    margin: 0 0 1.5rem;
-    overflow: hidden;
-    width: 33.333%;
-    text-align: center;
-  }
-  label {
-    display: block;
-  }
-  input {
-    width: 4em;
-    font-size: 1.5rem;
-    font-family: sans-serif;
-  }
-  textarea {
-    width: 100%;
-    height: 20rem;
-    font-family: Menlo,Consolas,monospace;
-    font-size: 1rem;
-    max-width: 100%;
-  }
-  </style>
+  <title>Typografier—a modular typography building tool</title>
+  <meta name="description" content="Typografier is a tool that generates a modular &amp; harmonious type system for modern websites.">
+  <meta name="viewport" content="width=1200">
+  <link href="css/typografier.min.css" rel="stylesheet">
 </head>
 <body>
 
-<h1>Modular Type CSS Generator</h1>
+<h1 class="common-bar__title kilo">Typografier<span class="common-bar__title__subhead">—a modular typography building tool</span></h1>
 
-<form id="form">
-  <div>
-    <label for="base-font-size">Base Font Size</label>
-    <input type="number" id="base-font-size" autofocus>
-  </div>
-  <div>
-    <label for="base-line-height">Base Line Height</label>
-    <input type="number" id="base-line-height">
-  </div>
-  <div>
-    <label for="type-scale">Type Scale</label>
-    <input type="number" id="type-scale">
-  </div>
-</form>
+<main class="main" role="main">
+  <form id="controls">
+    <table>
+      <tr>
+        <th scope="row" id="label-prefix" colspan="8"><label for="base-font-size">Base font-size</label></th>
+        <td colspan="6"><input type="number" id="base-font-size" value="16"></td>
+        <td colspan="10"></td>
+      </tr>
+      <tr>
+        <th scope="row" id="label-columns" colspan="8"><label for="base-line-height">Base line-height</label></th>
+        <td colspan="6"><input type="number" id="base-line-height" value="24"></td>
+        <td colspan="10"></td>
+      </tr>
+      <tr>
+        <th scope="row" id="label-min-width" colspan="8"><label for="type-scale">Type scale</label></th>
+        <td colspan="6"><input type="number" id="type-scale"></td>
+        <td colspan="10"></td>
+      </tr>
+    </table>
+  </form>
+</main>
 
-<h2>Resulting CSS</h2>
+<div class="output">
+  <textarea id="output"></textarea>
+</div>
 
-<textarea id="output"></textarea>
+<aside class="common-bar" role="complementary">
+  <ul class="list-group common-bar__social">
+    <li class="list-group-item list-group-item-inline">
+      <a class="icon i--28 i--github ir" href="https://github.com/thomasjbradley/typografier" rel="external">GitHub</a>
+    </li>
+    <li class="list-group-item list-group-item-inline">
+      <a class="icon i--28 i--twitter ir" href="https://twitter.com/thomasjbradley" rel="external">Twitter</a>
+    </li>
+    <li class="list-group-item list-group-item-inline">
+      <a class="icon i--28 i--22w i--thomasjbradley ir" href="http://thomasjbradley.ca" rel="external me">Website</a>
+    </li>
+  </ul>
+</aside>
 
-<div id="css-base" hidden>html {
+<script type="text/template" id="css-base">html {
   font: normal {{base-font}}%/{{base-line-height}} Georgia,serif; /* {{base-font-size-px}}px/{{base-line-height-px}}px */
 }
 
@@ -79,80 +60,18 @@ p, ul, ol, dl,
 blockquote, table, hr {
   margin: 0 0 {{base-line-height}}rem;
 }
-</div>
+</script>
 
-<div id="css-element" hidden>
+<script type="text/template" id="css-element">
 {{selectors}} {
   font-size: {{font-size}}rem;
   line-height: {{line-height}};
 }
-</div>
-
-<script>
-  var sizes = [
-    { sel: ['.yotta'], power: 7},
-    { sel: ['.zetta'], power: 6},
-    { sel: ['h1', '.exa'], power: 5},
-    { sel: ['h2', '.peta'], power: 4},
-    { sel: ['h3', '.tera'], power: 3},
-    { sel: ['h4', '.giga'], power: 2},
-    { sel: ['h5', '.mega'], power: 1},
-    { sel: ['h6', '.kilo'], power: 0},
-    { sel: ['small', '.milli'], power: -1},
-    { sel: ['.micro'], power: -2},
-  ],
-  inputs = {
-    baseFontSize: document.getElementById('base-font-size'),
-    baseLineHeight: document.getElementById('base-line-height'),
-    typeScale: document.getElementById('type-scale'),
-    output: document.getElementById('output')
-  },
-  templates = {
-    base: document.getElementById('css-base').innerHTML,
-    element: document.getElementById('css-element').innerHTML
-  },
-  validateEvents = function validateEvents (e) {
-    if (inputs.baseFontSize.value && inputs.baseLineHeight.value && inputs.typeScale.value) {
-      prepareCSS(inputs.baseFontSize.value, inputs.baseLineHeight.value, inputs.typeScale.value);
-    }
-  },
-  calculateValues = function calculateValues (baseFontSize, baseLineHeight, typeScale, power) {
-    var fontSize = (baseFontSize * Math.pow(typeScale, power)) / baseFontSize,
-      lineHeight = baseLineHeight / baseFontSize
-
-    return {
-      fontSize: fontSize,
-      lineHeight: Math.ceil(fontSize / lineHeight) * (lineHeight / fontSize)
-    };
-  },
-  prepareCSS = function prepareCSS (baseFontSize, baseLineHeight, typeScale) {
-    var fontSize = (baseFontSize / 16) * 100,
-      lineHeight = baseLineHeight / baseFontSize,
-      css = [
-        templates.base
-          .replace('{{base-font}}', fontSize)
-          .replace(/\{\{base\-line\-height\}\}/g, lineHeight)
-          .replace('{{base-font-size-px}}', baseFontSize)
-          .replace('{{base-line-height-px}}', baseLineHeight)
-      ];
-
-    sizes.forEach(function (elem, index, arr) {
-      var vals = calculateValues(baseFontSize, baseLineHeight, typeScale, sizes[index].power);
-      css.push(
-        templates.element
-          .replace('{{selectors}}', sizes[index].sel.join(', '))
-          .replace('{{font-size}}', vals.fontSize.toFixed(4))
-          .replace('{{line-height}}', vals.lineHeight.toFixed(4))
-      );
-    });
-
-    inputs.output.value = css.join('');
-  };
-
-  inputs.baseFontSize.addEventListener('change', validateEvents);
-  inputs.baseLineHeight.addEventListener('change', validateEvents);
-  inputs.typeScale.addEventListener('change', validateEvents);
 </script>
+
+<!-- <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script> -->
+<script src="js/jquery-2.0.3.min.js"></script>
+<script src="js/typografier.min.js"></script>
 
 </body>
 </html>
