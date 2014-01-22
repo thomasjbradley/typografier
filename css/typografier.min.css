@@ -97,6 +97,7 @@ textarea:focus{outline:2px solid #000}
 table{width:100%;border-collapse:collapse;table-layout:fixed}
 th,td{padding:.75rem 0;vertical-align:middle;text-align:left}
 tr{border-bottom:1px solid #ccc}
+tr:first-child th,tr:first-child td{padding-top:0}
 label{vertical-align:middle}
 input{padding:.25em;vertical-align:middle;width:85%;border:1px solid #ccc;font:normal 100%/1.5 Menlo,Consolas,serif}
 input:focus{outline:2px solid #000}
