@@ -13,7 +13,11 @@ var
   ],
 
   $baseFontSize = $('#base-font-size'),
+  $fontSizeUnit = $('[name="font-size-unit"]'),
+  $fontSizeUnitPx = $('#font-size-px'),
   $baseLineHeight = $('#base-line-height'),
+  $lineHeightUnit = $('[name="line-height-unit"]'),
+  $lineHeightUnitPx = $('#line-height-px'),
   $typeScale = $('#type-scale'),
   $controls = $('#controls'),
   $output = $('#output'),
@@ -24,8 +28,11 @@ var
   },
 
   validateEvents = function validateEvents () {
+    var baseFontSize = Math.round(($fontSizeUnitPx.is(':checked')) ? $baseFontSize.val() : $baseFontSize.val() * 16 / 100),
+      baseLineHeight = Math.round(($lineHeightUnitPx.is(':checked')) ? $baseLineHeight.val() : baseFontSize * $baseLineHeight.val());
+
     if ($baseFontSize.val() && $baseLineHeight.val() && $typeScale.val()) {
-      prepareCSS($baseFontSize.val(), $baseLineHeight.val(), $typeScale.val());
+      prepareCSS(baseFontSize, baseLineHeight, $typeScale.val());
     }
   },
 
@@ -46,8 +53,6 @@ var
         templates.base
           .replace('{{base-font}}', fontSize)
           .replace(/\{\{base\-line\-height\}\}/g, lineHeight)
-          .replace('{{base-font-size-px}}', baseFontSize)
-          .replace('{{base-line-height-px}}', baseLineHeight)
           .replace('{{line-height-half}}', (lineHeight / 2).toFixed(4))
           .replace('{{line-height-double}}', (lineHeight * 2).toFixed(4))
       ];
@@ -69,3 +74,37 @@ $controls.on('keyup change submit', function (e) {
   e.preventDefault();
   validateEvents();
 });
+
+$('#type-scale-select').on('change', function (e) {
+  e.stopPropagation();
+  $typeScale.val($(this).val());
+  validateEvents();
+});
+
+$fontSizeUnit.on('change', function (e) {
+  e.stopPropagation();
+
+  if ($(this).val() == 'px') {
+    $baseFontSize.val(16);
+  } else {
+    $baseFontSize.val(100);
+  }
+
+  validateEvents();
+});
+
+$lineHeightUnit.on('change', function (e) {
+  e.stopPropagation();
+
+  if ($(this).val() == 'px') {
+    $baseLineHeight.val(24);
+    $baseLineHeight.attr('step', 1);
+  } else {
+    $baseLineHeight.val(1.5);
+    $baseLineHeight.attr('step', 0.001);
+  }
+
+  validateEvents();
+});
+
+validateEvents();

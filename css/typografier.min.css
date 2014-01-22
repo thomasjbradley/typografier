@@ -100,7 +100,8 @@ tr{border-bottom:1px solid #ccc}
 label{vertical-align:middle}
 input{padding:.25em;vertical-align:middle;width:85%;border:1px solid #ccc;font:normal 100%/1.5 Menlo,Consolas,serif}
 input:focus{outline:2px solid #000}
-input[type="checkbox"]{width:auto;cursor:pointer}
+input[type="checkbox"],input[type="radio"]{width:auto;cursor:pointer}
+select{width:85%}
 .common-bar{bottom:0;height:3.5rem;left:0;padding:1rem;position:absolute;right:0;background-color:#ddd;border-top:1px solid #999}
 .common-bar__title{bottom:1rem;left:1rem;margin:0;position:absolute;z-index:1000;color:#666}
 .common-bar__title__subhead{font-weight:normal}
