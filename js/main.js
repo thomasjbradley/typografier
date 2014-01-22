@@ -19,6 +19,7 @@ var
   $lineHeightUnit = $('[name="line-height-unit"]'),
   $lineHeightUnitPx = $('#line-height-px'),
   $typeScale = $('#type-scale'),
+  $typeScaleSelect = $('#type-scale-select'),
   $controls = $('#controls'),
   $output = $('#output'),
 
@@ -75,12 +76,6 @@ $controls.on('keyup change submit', function (e) {
   validateEvents();
 });
 
-$('#type-scale-select').on('change', function (e) {
-  e.stopPropagation();
-  $typeScale.val($(this).val());
-  validateEvents();
-});
-
 $fontSizeUnit.on('change', function (e) {
   e.stopPropagation();
 
@@ -105,6 +100,16 @@ $lineHeightUnit.on('change', function (e) {
   }
 
   validateEvents();
+});
+
+$typeScaleSelect.on('change', function (e) {
+  e.stopPropagation();
+  $typeScale.val($(this).val());
+  validateEvents();
+});
+
+$typeScale.on('keyup change', function () {
+  $typeScaleSelect.val(0);
 });
 
 validateEvents();
