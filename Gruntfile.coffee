@@ -33,22 +33,15 @@ module.exports = (grunt) ->
           compress: true
           urlfunc: 'embedurl'
         files:
-          'css/gridifier.min.css': [
+          'css/typografier.min.css': [
             'css/normalize.styl'
             'css/main.styl'
           ]
 
-    # coffee:
-    #   compile:
-    #     files:
-    #       'js/collaborating415.coffee.js': [
-    #         'js/*.coffee'
-    #       ]
-
     concat:
       dev:
         files:
-          'js/gridifier.min.js': [
+          'js/typografier.min.js': [
             'js/main.js'
           ]
 
@@ -59,7 +52,7 @@ module.exports = (grunt) ->
           compress: true
           preserveComments: 'some'
         files:
-          'js/gridifier.min.js': [
+          'js/typografier.min.js': [
             'js/main.js'
           ]
 
@@ -69,17 +62,17 @@ module.exports = (grunt) ->
       stylus:
         options:
           livereload: false
-        files: ['css/*.styl']
+        files: ['css/*.styl', '!css/*.min.css']
         tasks: ['stylus']
       concat:
         options:
           livereload: false
-        files: ['js/*.js']
+        files: ['js/*.js', '!js/*.min.js']
         tasks: ['concat:dev']
       css:
-        files: ['css/*.css']
+        files: ['css/typografier.min.css']
       js:
-        files: ['js/*.js']
+        files: ['js/typografier.min.js']
       html:
         files: ['*.html']
 
@@ -87,9 +80,7 @@ module.exports = (grunt) ->
 
   grunt.registerTask 'build', [
     'svgmin'
-    # 'imageoptim'
     'stylus'
-    # 'coffee'
     'concat'
     'uglify:prod'
   ]
