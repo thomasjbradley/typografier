@@ -56,9 +56,23 @@
 }
 
 h1, h2, h3, h4, h5, h6,
-p, ul, ol, dl,
-blockquote, table, hr {
+p, ul, ol, dl, dd, figure,
+blockquote, details, hr,
+fieldset, pre, table,
+.space {
   margin: 0 0 {{base-line-height}}rem;
+}
+
+.space-none {
+  margin-bottom: 0;
+}
+
+.space-double {
+  margin-bottom: {{line-height-double}}rem;
+}
+
+.space-half {
+  margin-bottom: {{line-height-half}}rem;
 }
 </script>
 

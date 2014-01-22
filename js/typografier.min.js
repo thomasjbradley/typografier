@@ -48,6 +48,8 @@ var
           .replace(/\{\{base\-line\-height\}\}/g, lineHeight)
           .replace('{{base-font-size-px}}', baseFontSize)
           .replace('{{base-line-height-px}}', baseLineHeight)
+          .replace('{{line-height-half}}', (lineHeight / 2).toFixed(4))
+          .replace('{{line-height-double}}', (lineHeight * 2).toFixed(4))
       ];
 
     sizes.forEach(function (elem, index, arr) {
