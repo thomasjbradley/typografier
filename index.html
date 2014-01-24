@@ -125,30 +125,65 @@
 h1, h2, h3, h4, h5, h6,
 p, ul, ol, dl, dd, figure,
 blockquote, details, hr,
-fieldset, pre, table,
-.space {
+fieldset, pre, table {
   {{legacy}}
   margin: 0 0 {{base-line-height-px}}px;
   {{/legacy}}
   margin: 0 0 {{base-line-height}}rem;
 }
+{{type-scale}}
 
-.space-none {
+.push {
+  {{legacy}}
+  margin-bottom: {{base-line-height-px}}px;
+  {{/legacy}}
+  margin-bottom: {{base-line-height}}rem;
+}
+
+.push-none, .push-0 {
   margin-bottom: 0;
 }
 
-.space-double {
+.push-double, .push-2 {
   {{legacy}}
   margin-bottom: {{line-height-double-px}}px;
   {{/legacy}}
   margin-bottom: {{line-height-double}}rem;
 }
 
-.space-half {
+.push-half, .push-1-2 {
   {{legacy}}
   margin-bottom: {{line-height-half-px}}px;
   {{/legacy}}
   margin-bottom: {{line-height-half}}rem;
+}
+
+.pad-top-double, .pad-t-2 {
+  {{legacy}}
+  padding-top: {{line-height-double-px}}px;
+  {{/legacy}}
+  padding-top: {{line-height-double}}rem;
+}
+
+.pad-bottom-double, .pad-b-2 {
+  {{legacy}}
+  padding-bottom: {{line-height-double-px}}px;
+  {{/legacy}}
+  padding-bottom: {{line-height-double}}rem;
+}
+
+.pad-top-half, .pad-t-1-2 {
+  {{legacy}}
+  padding-top: {{line-height-half-px}}px;
+  {{/legacy}}
+  padding-top: {{line-height-half}}rem;
+}
+
+.pad-bottom-half, .pad-b-1-2 {
+  {{legacy}}
+  padding-bottom: {{line-height-half-px}}px;
+  {{/legacy}}
+  padding-bottom: {{line-height-half}}rem;
 }
 </script>
 

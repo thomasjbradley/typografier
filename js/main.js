@@ -52,24 +52,15 @@ var
   },
 
   prepareCSS = function prepareCSS (baseFontSize, baseLineHeight, typeScale) {
-    var fontSize = (baseFontSize / 16) * 100,
-      lineHeight = baseLineHeight / baseFontSize,
-      css = [
-        view('css-base', {
-          'base-font': fontSize,
-          'base-font-px': baseFontSize,
-          'base-line-height': lineHeight,
-          'base-line-height-px': lineHeight * baseFontSize,
-          'line-height-half': (lineHeight / 2).toFixed(4),
-          'line-height-half-px': Math.round(baseLineHeight / 2),
-          'line-height-double': (lineHeight * 2).toFixed(4),
-          'line-height-double-px': baseLineHeight * 2
-        })
-      ];
+    var typeScaleValues = [],
+      css = '',
+      fontSize = (baseFontSize / 16) * 100,
+      lineHeight = baseLineHeight / baseFontSize;
 
     sizes.forEach(function (elem, index, arr) {
       var vals = calculateValues(baseFontSize, baseLineHeight, typeScale, sizes[index].power);
-      css.push(
+
+      typeScaleValues.push(
         view('css-element', {
           'selectors': sizes[index].sel.join(', '),
           'font-size': vals.fontSize.toFixed(4),
@@ -80,7 +71,19 @@ var
       );
     });
 
-    $output.html(css.join(''));
+    css = view('css-base', {
+      'base-font': fontSize,
+      'base-font-px': baseFontSize,
+      'base-line-height': lineHeight,
+      'base-line-height-px': lineHeight * baseFontSize,
+      'line-height-half': (lineHeight / 2).toFixed(4),
+      'line-height-half-px': Math.round(baseLineHeight / 2),
+      'line-height-double': (lineHeight * 2).toFixed(4),
+      'line-height-double-px': baseLineHeight * 2,
+      'type-scale': typeScaleValues.join('')
+    });
+
+    $output.html(css);
   };
 
 $controls.on('keyup change submit', function (e) {
