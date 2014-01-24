@@ -14,6 +14,7 @@ body
 .main
   bottom 3.5rem
   left 0
+  overflow-x hidden
   overflow-y auto
   position absolute
   padding 1em
@@ -29,6 +30,27 @@ body
 
   background-color interface-grey
   border-left 1px solid interface-grey-dark
+
+.has-options
+  bottom 7rem
+
+.extra-options
+  bottom 3.5rem
+  height 3.5rem
+  padding 1em
+  position fixed
+  right 0
+  width 50%
+
+  background-color interface-grey
+  border-left 1px solid interface-grey-dark
+  border-top 1px solid interface-grey-dark
+
+  color #666
+
+.options-title
+  display inline-block
+  margin-right 1.5rem
 
 textarea
   padding 1em
@@ -86,3 +108,52 @@ input[type="radio"]
 
 select
   width 85%
+
+a
+a:link
+a:visited
+  border-bottom 0.1em solid rgba(blue, 0.3)
+  transition border-color 200ms linear
+
+  color blue
+  text-decoration none
+
+a:hover
+a:focus
+a:active
+  border-bottom-color blue
+
+.btn
+.btn:link
+.btn:visited
+  display inline-block
+  padding 0.5em 1em
+
+  background-color interface-grey
+  border 1px solid interface-grey-dark
+  border-radius 6px
+  cursor pointer
+  transition border-color 70ms linear, background-color 70ms linear, color 70ms linear
+
+  color #000
+  font bold 100%/1.5 brand-family
+  text-decoration none
+
+.btn::before
+  color #000
+
+.btn:hover
+  background-color blue
+  border-color navy
+
+  color #fff
+
+.btn:focus
+  outline 2px solid #000
+
+.btn-fatal:hover
+  background-color red
+  border-color maroon
+
+.btn:hover::before
+  color #fff

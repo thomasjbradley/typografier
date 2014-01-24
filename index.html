@@ -58,14 +58,21 @@
         </td>
       </tr>
     </table>
+    <div class="extra-options">
+      <strong class="options-title">Legacy support</strong>
+      <input type="checkbox" id="legacy">
+      <label for="legacy">IE &lt;= 7</label>
+    </div>
   </form>
 </main>
 
-<div class="output">
-  <textarea id="output"></textarea>
+<div class="output has-options">
+  <textarea id="output" spellcheck="false"></textarea>
 </div>
 
 <aside class="common-bar" role="complementary">
+  <button class="help__open" title="Help">?<span class="visually-hidden"> Help</span></button>
+
   <ul class="list-group common-bar__social">
     <li class="list-group-item list-group-item-inline">
       <a class="icon i--28 i--github ir" href="https://github.com/thomasjbradley/typografier" rel="external">GitHub</a>
@@ -78,6 +85,40 @@
     </li>
   </ul>
 </aside>
+
+<div class="help-dialog help-backdrop" data-state="open">
+  <aside class="help" role="complementary">
+    <button class="help__close">×</button>
+
+    <h2 class="mega help-color">Help &amp; Tutorials</h2>
+    <p class="micro"><i>Gridifer</i> generates a responsive grid with classes for each breakpoint. Simplifying the process of making &amp; maintaining a grid.</p>
+
+    <div class="help__buttons space">
+      <a class="btn btn-icon btn-tutorials help-btn" href="https://github.com/thomasjbradley/gridifier" rel="external">Tutorials</a>
+      <a class="btn btn-icon btn-videos help-btn" href="https://www.youtube.com/playlist?list=PLWjCJDeWfDdeUChfM6TV2U7jzQVRjsu60" rel="external">Videos</a>
+    </div>
+
+    <div class="clearfix">
+      <div class="left">
+        <h3 class="micro space-none">Similar Apps</h3>
+        <ul class="micro list-group space-none">
+          <li><a class="help-link" href="https://gridsetapp.com/" rel="external">Gridset</a></li>
+          <li><a class="help-link" href="http://yui.github.io/gridbuilder/" rel="external">YUI Grid Builder</a></li>
+        </ul>
+      </div>
+
+      <div class="right">
+        <h3 class="micro space-none">Inspriation</h3>
+        <ul class="micro list-group space-none">
+          <li><a class="help-link" href="http://purecss.io/" rel="external">YUI Pure</a></li>
+          <li><a class="help-link" href="http://getbootstrap.com/" rel="external">Bootstrap</a></li>
+          <li><a class="help-link" href="http://foundation.zurb.com/" rel="external">Foundation</a></li>
+        </ul>
+      </div>
+    </div>
+
+  </aside>
+</div>
 
 <script type="text/template" id="css-base">html {
   font: normal {{base-font}}%/{{base-line-height}} Georgia,serif;
@@ -111,7 +152,6 @@ fieldset, pre, table,
 }
 </script>
 
-<script src="js/jquery-2.0.3.min.js"></script>
 <script src="js/typografier.min.js"></script>
 
 </body>
