@@ -17,3 +17,5 @@ This tool is introduced to the students after they learn the “long, hard, stup
 ## License
 
 Gridifier is licensed under the [New BSD license](LICENSE.txt).
+
+[Paper icon](http://thenounproject.com/term/paper/29062/) copyright Yazmin Alanis.
