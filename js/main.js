@@ -22,10 +22,14 @@ var
   $typeScaleSelect = $('#type-scale-select'),
   $controls = $('#controls'),
   $output = $('#output'),
+  $legacy = $('#legacy'),
 
-  templates = {
-    base: $('#css-base').html(),
-    element: $('#css-element').html()
+  view = function view (name, vals) {
+    if (!vals) vals = {};
+
+    vals.legacy = $legacy.is(':checked');
+
+    return prepareTemplate(name, vals);
   },
 
   validateEvents = function validateEvents () {
@@ -51,20 +55,28 @@ var
     var fontSize = (baseFontSize / 16) * 100,
       lineHeight = baseLineHeight / baseFontSize,
       css = [
-        templates.base
-          .replace('{{base-font}}', fontSize)
-          .replace(/\{\{base\-line\-height\}\}/g, lineHeight)
-          .replace('{{line-height-half}}', (lineHeight / 2).toFixed(4))
-          .replace('{{line-height-double}}', (lineHeight * 2).toFixed(4))
+        view('css-base', {
+          'base-font': fontSize,
+          'base-font-px': baseFontSize,
+          'base-line-height': lineHeight,
+          'base-line-height-px': lineHeight * baseFontSize,
+          'line-height-half': (lineHeight / 2).toFixed(4),
+          'line-height-half-px': Math.round(baseLineHeight / 2),
+          'line-height-double': (lineHeight * 2).toFixed(4),
+          'line-height-double-px': baseLineHeight * 2
+        })
       ];
 
     sizes.forEach(function (elem, index, arr) {
       var vals = calculateValues(baseFontSize, baseLineHeight, typeScale, sizes[index].power);
       css.push(
-        templates.element
-          .replace('{{selectors}}', sizes[index].sel.join(', '))
-          .replace('{{font-size}}', vals.fontSize.toFixed(4))
-          .replace('{{line-height}}', vals.lineHeight.toFixed(4))
+        view('css-element', {
+          'selectors': sizes[index].sel.join(', '),
+          'font-size': vals.fontSize.toFixed(4),
+          'font-size-px': Math.round(vals.fontSize * baseFontSize),
+          'line-height': vals.lineHeight.toFixed(4),
+          'line-height-px': Math.round(vals.lineHeight * baseLineHeight)
+        })
       );
     });
 

@@ -61,7 +61,7 @@
     <div class="extra-options">
       <strong class="options-title">Legacy support</strong>
       <input type="checkbox" id="legacy">
-      <label for="legacy">IE &lt;= 7</label>
+      <label for="legacy">IE &lt;= 8, Opera Mini</label>
     </div>
   </form>
 </main>
@@ -75,13 +75,13 @@
 
   <ul class="list-group common-bar__social">
     <li class="list-group-item list-group-item-inline">
-      <a class="icon i--28 i--github ir" href="https://github.com/thomasjbradley/typografier" rel="external">GitHub</a>
+      <a class="icon i--28 i--github ir" href="https://github.com/thomasjbradley/typografier" title="GitHub" rel="external">GitHub</a>
     </li>
     <li class="list-group-item list-group-item-inline">
-      <a class="icon i--28 i--twitter ir" href="https://twitter.com/thomasjbradley" rel="external">Twitter</a>
+      <a class="icon i--28 i--twitter ir" href="https://twitter.com/thomasjbradley" title="Twitter" rel="external">Twitter</a>
     </li>
     <li class="list-group-item list-group-item-inline">
-      <a class="icon i--28 i--22w i--thomasjbradley ir" href="http://thomasjbradley.ca" rel="external me">Website</a>
+      <a class="icon i--28 i--22w i--thomasjbradley ir" href="http://thomasjbradley.ca" title="Website" rel="external me">Website</a>
     </li>
   </ul>
 </aside>
@@ -91,28 +91,26 @@
     <button class="help__close">×</button>
 
     <h2 class="mega help-color">Help &amp; Tutorials</h2>
-    <p class="micro"><i>Gridifer</i> generates a responsive grid with classes for each breakpoint. Simplifying the process of making &amp; maintaining a grid.</p>
+    <p class="micro"><i>Typografier</i> generates a modular type system with a harmonious vertical rhythm. Simplifying the process of making &amp; maintaining a type system.</p>
 
     <div class="help__buttons space">
-      <a class="btn btn-icon btn-tutorials help-btn" href="https://github.com/thomasjbradley/gridifier" rel="external">Tutorials</a>
-      <a class="btn btn-icon btn-videos help-btn" href="https://www.youtube.com/playlist?list=PLWjCJDeWfDdeUChfM6TV2U7jzQVRjsu60" rel="external">Videos</a>
+      <a class="btn btn-icon btn-tutorials help-btn" href="https://github.com/thomasjbradley/typografier" rel="external">Tutorials</a>
+      <a class="btn btn-icon btn-videos help-btn" href="#" rel="external">Videos</a>
     </div>
 
     <div class="clearfix">
       <div class="left">
         <h3 class="micro space-none">Similar Apps</h3>
         <ul class="micro list-group space-none">
-          <li><a class="help-link" href="https://gridsetapp.com/" rel="external">Gridset</a></li>
-          <li><a class="help-link" href="http://yui.github.io/gridbuilder/" rel="external">YUI Grid Builder</a></li>
+          <li><a class="help-link" href="http://type-scale.com/" rel="external">Type Scale</a></li>
+          <li><a class="help-link" href="http://modularscale.com/" rel="external">Modular Scale</a></li>
         </ul>
       </div>
 
       <div class="right">
-        <h3 class="micro space-none">Inspriation</h3>
+        <h3 class="micro space-none">Inspiration</h3>
         <ul class="micro list-group space-none">
-          <li><a class="help-link" href="http://purecss.io/" rel="external">YUI Pure</a></li>
-          <li><a class="help-link" href="http://getbootstrap.com/" rel="external">Bootstrap</a></li>
-          <li><a class="help-link" href="http://foundation.zurb.com/" rel="external">Foundation</a></li>
+          <li><a class="help-link" href="http://csswizardry.com/2012/02/pragmatic-practical-font-sizing-in-css/" rel="external">CSS Wizardry</a> <a class="help-link" href="http://csswizardry.com/2012/06/single-direction-margin-declarations/" rel="external">× 2</a></li>
         </ul>
       </div>
     </div>
@@ -120,7 +118,7 @@
   </aside>
 </div>
 
-<script type="text/template" id="css-base">html {
+<script type="text/template" data-template="css-base">html {
   font: normal {{base-font}}%/{{base-line-height}} Georgia,serif;
 }
 
@@ -129,6 +127,9 @@ p, ul, ol, dl, dd, figure,
 blockquote, details, hr,
 fieldset, pre, table,
 .space {
+  {{legacy}}
+  margin: 0 0 {{base-line-height-px}}px;
+  {{/legacy}}
   margin: 0 0 {{base-line-height}}rem;
 }
 
@@ -137,16 +138,25 @@ fieldset, pre, table,
 }
 
 .space-double {
+  {{legacy}}
+  margin-bottom: {{line-height-double-px}}px;
+  {{/legacy}}
   margin-bottom: {{line-height-double}}rem;
 }
 
 .space-half {
+  {{legacy}}
+  margin-bottom: {{line-height-half-px}}px;
+  {{/legacy}}
   margin-bottom: {{line-height-half}}rem;
 }
 </script>
 
-<script type="text/template" id="css-element">
+<script type="text/template" data-template="css-element">
 {{selectors}} {
+{{legacy}}
+  font-size: {{font-size-px}}px;
+{{/legacy}}
   font-size: {{font-size}}rem;
   line-height: {{line-height}};
 }
