@@ -127,20 +127,14 @@
 h1, h2, h3, h4, h5, h6,
 p, ul, ol, dl, dd, figure,
 blockquote, details, hr,
-fieldset, pre, table {
+fieldset, pre, table,
+.push, .island {
 {{legacy}}
   margin: 0 0 {{base-line-height-px}}px;
 {{/legacy}}
   margin: 0 0 {{base-line-height}}rem;
 }
 {{type-scale}}
-
-.push {
-{{legacy}}
-  margin-bottom: {{base-line-height-px}}px;
-{{/legacy}}
-  margin-bottom: {{base-line-height}}rem;
-}
 
 .push-none, .push-0 {
   margin-bottom: 0;
@@ -200,6 +194,54 @@ fieldset, pre, table {
   padding-bottom: {{line-height-half-px}}px;
 {{/legacy}}
   padding-bottom: {{line-height-half}}rem;
+}
+
+.island {
+{{legacy}}
+  padding: {{base-line-height-px}}px;
+{{/legacy}}
+  padding: {{base-line-height}}rem;
+}
+
+.island-half, .island-1-2 {
+{{legacy}}
+  padding: {{line-height-half-px}}px;
+{{/legacy}}
+  padding: {{line-height-half}}rem;
+}
+
+.island-double, .island-2 {
+{{legacy}}
+  padding: {{line-height-double-px}}px;
+{{/legacy}}
+  padding: {{line-height-double}}rem;
+}
+
+.gutter {
+{{legacy}}
+  padding-left: {{base-line-height-px}}px;
+  padding-right: {{base-line-height-px}}px;
+{{/legacy}}
+  padding-left: {{base-line-height}}rem;
+  padding-right: {{base-line-height}}rem;
+}
+
+.gutter-half, .gutter-1-2 {
+{{legacy}}
+  padding-left: {{line-height-half-px}}px;
+  padding-right: {{line-height-half-px}}px;
+{{/legacy}}
+  padding-left: {{line-height-half}}rem;
+  padding-right: {{line-height-half}}rem;
+}
+
+.gutter-double, .gutter-2 {
+{{legacy}}
+  padding-left: {{line-height-double-px}}px;
+  padding-right: {{line-height-double-px}}px;
+{{/legacy}}
+  padding-left: {{line-height-double}}rem;
+  padding-right: {{line-height-double}}rem;
 }
 </script>
 
