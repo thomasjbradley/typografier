@@ -127,14 +127,20 @@
 h1, h2, h3, h4, h5, h6,
 p, ul, ol, dl, dd, figure,
 blockquote, details, hr,
-fieldset, pre, table,
-.push, .island {
+fieldset, pre, table {
 {{legacy}}
   margin: 0 0 {{base-line-height-px}}px;
 {{/legacy}}
   margin: 0 0 {{base-line-height}}rem;
 }
 {{type-scale}}
+
+.push {
+{{legacy}}
+  margin-bottom: {{base-line-height-px}}px;
+{{/legacy}}
+  margin-bottom: {{base-line-height}}rem;
+}
 
 .push-none, .push-0 {
   margin-bottom: 0;
