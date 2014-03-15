@@ -4,7 +4,7 @@
 
 ---
 
-### [☛ Type system tutorial](https://github.com/algonquindesign/html-css/tree/master/modular-typography)
+### [☛ Type system tutorial](https://github.com/algonquindesign/html-css/tree/gh-pages/modular-typography)
 
 ### [☛ Videos for modular type]()
 
