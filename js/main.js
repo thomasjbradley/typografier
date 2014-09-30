@@ -21,7 +21,8 @@ var
   $typeScale = $('#type-scale'),
   $typeScaleSelect = $('#type-scale-select'),
   $controls = $('#controls'),
-  $output = $('#output'),
+  $cssOutput = $('#output'),
+  $sampleOutput = $('#sample-styles'),
   $legacy = $('#legacy'),
 
   view = function view (name, vals) {
@@ -37,7 +38,8 @@ var
       baseLineHeight = Math.round(($lineHeightUnitPx.is(':checked')) ? $baseLineHeight.val() : baseFontSize * $baseLineHeight.val());
 
     if ($baseFontSize.val() && $baseLineHeight.val() && $typeScale.val()) {
-      prepareCSS(baseFontSize, baseLineHeight, $typeScale.val());
+      prepareCSS(baseFontSize, baseLineHeight, $typeScale.val(), 'css-base', $cssOutput);
+      prepareCSS(baseFontSize, baseLineHeight, $typeScale.val(), 'css-sample', $sampleOutput, '-sample');
     }
   },
 
@@ -51,18 +53,25 @@ var
     };
   },
 
-  prepareCSS = function prepareCSS (baseFontSize, baseLineHeight, typeScale) {
+  prepareCSS = function prepareCSS (baseFontSize, baseLineHeight, typeScale, templateView, $output, selectorSuffix) {
     var typeScaleValues = [],
       css = '',
       fontSize = (baseFontSize / 16) * 100,
       lineHeight = baseLineHeight / baseFontSize;
 
     sizes.forEach(function (elem, index, arr) {
-      var vals = calculateValues(baseFontSize, baseLineHeight, typeScale, sizes[index].power);
+      var
+        vals = calculateValues(baseFontSize, baseLineHeight, typeScale, sizes[index].power),
+        sel = sizes[index].sel
+      ;
+
+      if (selectorSuffix) {
+        sel = [sizes[index].sel[sizes[index].sel.length - 1] + selectorSuffix];
+      }
 
       typeScaleValues.push(
         view('css-element', {
-          'selectors': sizes[index].sel.join(', '),
+          'selectors': sel.join(', '),
           'font-size': vals.fontSize.toFixed(4),
           'font-size-px': Math.round(vals.fontSize * baseFontSize),
           'line-height': vals.lineHeight.toFixed(4),
@@ -71,7 +80,7 @@ var
       );
     });
 
-    css = view('css-base', {
+    css = view(templateView, {
       'base-font': fontSize,
       'base-font-px': baseFontSize,
       'base-line-height': lineHeight,

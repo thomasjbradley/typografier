@@ -64,6 +64,23 @@
       <label for="legacy">IE &lt;= 8, Opera Mini</label>
     </div>
   </form>
+
+  <style id="sample-styles">
+
+  </style>
+
+  <samp class="sample">
+    <p class="yotta-sample">Preview size for .yotta</p>
+    <p class="zetta-sample">Preview size for .zetta</p>
+    <p class="exa-sample">Preview size for &lt;h1&gt; &amp; .exa</p>
+    <p class="peta-sample">Preview size for &lt;h2&gt; &amp; .peta</p>
+    <p class="tera-sample">Preview size for &lt;h3&gt; &amp; .tera</p>
+    <p class="giga-sample">Preview size for &lt;h4&gt; &amp; .giga</p>
+    <p class="mega-sample">Preview size for &lt;h5&gt; &amp; .mega</p>
+    <p class="kilo-sample">Preview size for &lt;h6&gt;, .kilo &amp; default: &lt;p&gt;, etc.</p>
+    <p class="milli-sample">Preview size for .milli</p>
+    <p class="micro-sample">Preview size for .micro</p>
+  </samp>
 </main>
 
 <div class="output has-options">
@@ -259,6 +276,18 @@ fieldset, pre, table {
   font-size: {{font-size}}rem;
   line-height: {{line-height}};
 }
+</script>
+
+<script type="text/template" data-template="css-sample">
+.sample {
+  font: normal {{base-font}}%/{{base-line-height}} Georgia,serif;
+}
+
+.sample Sample size for .p {
+  margin: 0 0 {{base-line-height}}rem;
+}
+
+{{type-scale}}
 </script>
 
 <script src="js/typografier.min.js"></script>
