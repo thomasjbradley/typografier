@@ -6,7 +6,7 @@
 
 ### [☛ Type system tutorial](https://github.com/algonquindesign/html-css/tree/gh-pages/modular-typography)
 
-### [☛ Videos for modular type]()
+### [☛ Videos for modular type](https://www.youtube.com/playlist?list=PLWjCJDeWfDde5lA0t6QGVvaqpkqRREe2l)
 
 This modular type system is taught as part of the [Algonquin College Graphic Design](http://algonquindesign.ca) program.
 
