@@ -20,6 +20,7 @@ var
   $lineHeightUnitPx = $('#line-height-px'),
   $typeScale = $('#type-scale'),
   $typeScaleSelect = $('#type-scale-select'),
+  $biggerFonts = $('#bigger-fonts'),
   $controls = $('#controls'),
   $cssOutput = $('#output'),
   $sampleOutput = $('#sample-styles'),
@@ -89,7 +90,8 @@ var
       'line-height-half-px': Math.round(baseLineHeight / 2),
       'line-height-double': (lineHeight * 2).toFixed(4),
       'line-height-double-px': baseLineHeight * 2,
-      'type-scale': typeScaleValues.join('')
+      'type-scale': typeScaleValues.join(''),
+      'bigger-fonts': ($biggerFonts.is(':checked')) ?  prepareTemplate('bigger-fonts'): ''
     });
 
     $output.html(css);
@@ -134,6 +136,10 @@ $typeScaleSelect.on('change', function (e) {
 
 $typeScale.on('keyup change', function () {
   $typeScaleSelect.val(0);
+});
+
+$biggerFonts.on('change', function (e) {
+  validateEvents();
 });
 
 validateEvents();

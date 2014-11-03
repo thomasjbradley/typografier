@@ -57,6 +57,10 @@
           </select>
         </td>
       </tr>
+      <tr>
+        <th scope="row" id="label-columns" colspan="14"><label for="bigger-fonts">Bigger fonts on bigger screens</label></th>
+        <td colspan="10"><input type="checkbox" id="bigger-fonts" value="yes" checked></td>
+      </tr>
     </table>
     <div class="extra-options">
       <strong class="options-title">Legacy support</strong>
@@ -140,6 +144,7 @@
 <script type="text/template" data-template="css-base">html {
   font: normal {{base-font}}%/{{base-line-height}} Georgia,serif;
 }
+{{bigger-fonts}}
 
 h1, h2, h3, h4, h5, h6,
 p, ul, ol, dl, dd, figure,
@@ -316,6 +321,32 @@ sub {
 }
 
 {{type-scale}}
+</script>
+
+<script type="text/template" data-template="bigger-fonts">
+@media only screen and (min-width: 60em) {
+
+  html {
+    font-size: 110%;
+  }
+
+}
+
+@media only screen and (min-width: 90em) {
+
+  html {
+    font-size: 120%;
+  }
+
+}
+
+@media only screen and (min-width: 120em) {
+
+  html {
+    font-size: 130%;
+  }
+
+}
 </script>
 
 <script src="js/typografier.min.js"></script>
