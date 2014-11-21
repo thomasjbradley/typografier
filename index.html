@@ -222,6 +222,13 @@ sub {
   margin-bottom: {{line-height-half}}rem;
 }
 
+.push-quarter, .push-1-4 {
+{{legacy}}
+  margin-bottom: {{line-height-quarter-px}}px;
+{{/legacy}}
+  margin-bottom: {{line-height-quarter}}rem;
+}
+
 .pad-top, .pad-t {
 {{legacy}}
   padding-top: {{base-line-height-px}}px;
@@ -264,11 +271,32 @@ sub {
   padding-bottom: {{line-height-half}}rem;
 }
 
+.pad-top-quarter, .pad-t-1-4 {
+{{legacy}}
+  padding-top: {{line-height-quarter-px}}px;
+{{/legacy}}
+  padding-top: {{line-height-quarter}}rem;
+}
+
+.pad-bottom-quarter, .pad-b-1-4 {
+{{legacy}}
+  padding-bottom: {{line-height-quarter-px}}px;
+{{/legacy}}
+  padding-bottom: {{line-height-quarter}}rem;
+}
+
 .island {
 {{legacy}}
   padding: {{base-line-height-px}}px;
 {{/legacy}}
   padding: {{base-line-height}}rem;
+}
+
+.island-double, .island-2 {
+{{legacy}}
+  padding: {{line-height-double-px}}px;
+{{/legacy}}
+  padding: {{line-height-double}}rem;
 }
 
 .island-half, .island-1-2 {
@@ -278,11 +306,11 @@ sub {
   padding: {{line-height-half}}rem;
 }
 
-.island-double, .island-2 {
+.island-quarter, .island-1-4 {
 {{legacy}}
-  padding: {{line-height-double-px}}px;
+  padding: {{line-height-quarter-px}}px;
 {{/legacy}}
-  padding: {{line-height-double}}rem;
+  padding: {{line-height-quarter}}rem;
 }
 
 .gutter {
@@ -294,6 +322,15 @@ sub {
   padding-right: {{base-line-height}}rem;
 }
 
+.gutter-double, .gutter-2 {
+{{legacy}}
+  padding-left: {{line-height-double-px}}px;
+  padding-right: {{line-height-double-px}}px;
+{{/legacy}}
+  padding-left: {{line-height-double}}rem;
+  padding-right: {{line-height-double}}rem;
+}
+
 .gutter-half, .gutter-1-2 {
 {{legacy}}
   padding-left: {{line-height-half-px}}px;
@@ -303,13 +340,13 @@ sub {
   padding-right: {{line-height-half}}rem;
 }
 
-.gutter-double, .gutter-2 {
+.gutter-quarter, .gutter-1-4 {
 {{legacy}}
-  padding-left: {{line-height-double-px}}px;
-  padding-right: {{line-height-double-px}}px;
+  padding-left: {{line-height-quarter-px}}px;
+  padding-right: {{line-height-quarter-px}}px;
 {{/legacy}}
-  padding-left: {{line-height-double}}rem;
-  padding-right: {{line-height-double}}rem;
+  padding-left: {{line-height-quarter}}rem;
+  padding-right: {{line-height-quarter}}rem;
 }
 </script>
 

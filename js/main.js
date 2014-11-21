@@ -88,6 +88,8 @@ var
       'base-line-height-px': lineHeight * baseFontSize,
       'line-height-half': (lineHeight / 2).toFixed(4),
       'line-height-half-px': Math.round(baseLineHeight / 2),
+      'line-height-quarter': (lineHeight / 4).toFixed(4),
+      'line-height-quarter-px': Math.round(baseLineHeight / 4),
       'line-height-double': (lineHeight * 2).toFixed(4),
       'line-height-double-px': baseLineHeight * 2,
       'type-scale': typeScaleValues.join(''),
