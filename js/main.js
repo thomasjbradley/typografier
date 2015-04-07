@@ -12,15 +12,15 @@ var
     { sel: ['.micro'], power: -2},
   ],
 
-  $baseFontSize = $('#base-font-size'),
-  $fontSizeUnit = $('[name="font-size-unit"]'),
-  $fontSizeUnitPx = $('#font-size-px'),
-  $baseLineHeight = $('#base-line-height'),
-  $lineHeightUnit = $('[name="line-height-unit"]'),
-  $lineHeightUnitPx = $('#line-height-px'),
-  $typeScale = $('#type-scale'),
-  $typeScaleSelect = $('#type-scale-select'),
-  $biggerFonts = $('#bigger-fonts'),
+  defaultMinWidths = [0, 38, 60, 90],
+  defaultLineHeights = [1.3,  1.4, 1.5],
+  defaultFontSizes = [100, 100, 100, 110, 120, 130],
+  defaultTypeScales = [1.067, 1.125],
+  breakpointCount = 0,
+
+  $breakpoints = $('#breakpoints'),
+  $btnAdd = $('#btn-add-breakpoint'),
+
   $controls = $('#controls'),
   $cssOutput = $('#output'),
   $sampleOutput = $('#sample-styles'),
@@ -34,16 +34,6 @@ var
     return prepareTemplate(name, vals);
   },
 
-  validateEvents = function validateEvents () {
-    var baseFontSize = Math.round(($fontSizeUnitPx.is(':checked')) ? $baseFontSize.val() : $baseFontSize.val() * 16 / 100),
-      baseLineHeight = Math.round(($lineHeightUnitPx.is(':checked')) ? $baseLineHeight.val() : baseFontSize * $baseLineHeight.val());
-
-    if ($baseFontSize.val() && $baseLineHeight.val() && $typeScale.val()) {
-      prepareCSS(baseFontSize, baseLineHeight, $typeScale.val(), 'css-base', $cssOutput);
-      prepareCSS(baseFontSize, baseLineHeight, $typeScale.val(), 'css-sample', $sampleOutput, '-sample');
-    }
-  },
-
   calculateValues = function calculateValues (baseFontSize, baseLineHeight, typeScale, power) {
     var fontSize = (baseFontSize * Math.pow(typeScale, power)) / baseFontSize,
       lineHeight = baseLineHeight / baseFontSize;
@@ -54,7 +44,7 @@ var
     };
   },
 
-  prepareCSS = function prepareCSS (baseFontSize, baseLineHeight, typeScale, templateView, $output, selectorSuffix) {
+  typeScales = function prepareCSS (baseFontSize, baseLineHeight, typeScale, templateView) {
     var typeScaleValues = [],
       css = '',
       fontSize = (baseFontSize / 16) * 100,
@@ -65,10 +55,6 @@ var
         vals = calculateValues(baseFontSize, baseLineHeight, typeScale, sizes[index].power),
         sel = sizes[index].sel
       ;
-
-      if (selectorSuffix) {
-        sel = [sizes[index].sel[sizes[index].sel.length - 1] + selectorSuffix];
-      }
 
       typeScaleValues.push(
         view('css-element', {
@@ -93,55 +79,102 @@ var
       'line-height-double': (lineHeight * 2).toFixed(4),
       'line-height-double-px': baseLineHeight * 2,
       'type-scale': typeScaleValues.join(''),
-      'bigger-fonts': ($biggerFonts.is(':checked')) ?  prepareTemplate('bigger-fonts'): ''
     });
 
-    $output.html(css);
+    return css;
   };
 
 $controls.on('keyup change submit', function (e) {
+  var typePieces = [],
+    output = '',
+    defaultFontSize,
+    defaultLineHeight,
+    previousLineHeight = 0,
+    previousTypeScale = 0
+  ;
+
   e.preventDefault();
-  validateEvents();
+
+  $breakpoints.children().each(function () {
+    var percentFontSize = $(this).find('.font-size').val(),
+      lineHeightMultiplier = $(this).find('.line-height').val(),
+      baseFontSize = Math.round(percentFontSize * 16 / 100),
+      baseLineHeight = Math.round(baseFontSize * lineHeightMultiplier),
+      typeScale = $(this).find('.type-scale').val(),
+      $minWidth = $(this).find('.min-width'),
+      hasMinWidth = $minWidth.length,
+      isOnlyFontSizeChange = (previousLineHeight == lineHeightMultiplier && previousTypeScale == typeScale)
+    ;
+
+    if (hasMinWidth) {
+      if (isOnlyFontSizeChange) {
+        typePieces.push(
+          view('media-query-font-size-only', {
+              'min-width': $minWidth.val(),
+              'font-size': percentFontSize
+            })
+        );
+      } else {
+        typePieces.push(
+          view('media-query', {
+              'min-width': $minWidth.val(),
+              'css': typeScales(baseFontSize, baseLineHeight, typeScale, 'scale-base')
+            })
+        );
+      }
+    } else {
+      defaultFontSize = percentFontSize;
+      defaultLineHeight = lineHeightMultiplier;
+      typePieces = typePieces.concat(typeScales(baseFontSize, baseLineHeight, typeScale, 'scale-base'));
+    }
+
+    previousLineHeight = lineHeightMultiplier;
+    previousTypeScale = typeScale;
+  });
+
+  output = [view('css-base', {
+    'base-font': defaultFontSize,
+    'base-line-height': defaultLineHeight,
+    'main': typePieces.join('')
+  })];
+
+  $cssOutput.html(output);
 });
 
-$fontSizeUnit.on('change', function (e) {
-  e.stopPropagation();
+$btnAdd.on('click', function () {
+  var lastWidth = defaultMinWidths.length - 1,
+    lastSize = defaultFontSizes.length - 1,
+    lastLineHeight = defaultLineHeights.length - 1,
+    lastTypeScale = defaultTypeScales.length - 1,
+    minWidthIncrement = 20,
+    extra = (new Array(100)).join("x");
 
-  if ($(this).val() == 'px') {
-    $baseFontSize.val(16);
-  } else {
-    $baseFontSize.val(100);
-  }
+  $breakpoints.append(view('breakpoint', {
+      'id': breakpointCount,
+      'min-width': defaultMinWidths[breakpointCount] || defaultMinWidths[lastWidth] + ((breakpointCount - lastWidth) * minWidthIncrement),
+      'font-size': defaultFontSizes[breakpointCount] || defaultFontSizes[lastSize],
+      'line-height': defaultLineHeights[breakpointCount] || defaultLineHeights[lastLineHeight]
+    })
+  );
 
-  validateEvents();
+  $breakpoints.find('tr:last-child .type-scale').val(defaultTypeScales[breakpointCount] || defaultTypeScales[lastTypeScale]);
+
+  breakpointCount++;
+
+  $controls.trigger('submit');
 });
 
-$lineHeightUnit.on('change', function (e) {
-  e.stopPropagation();
-
-  if ($(this).val() == 'px') {
-    $baseLineHeight.val(24);
-    $baseLineHeight.attr('step', 1);
-  } else {
-    $baseLineHeight.val(1.5);
-    $baseLineHeight.attr('step', 0.001);
-  }
-
-  validateEvents();
+$controls.on('click', '.btn-remove-breakpoint', function (e) {
+  e.preventDefault();
+  $(this).parent().parent().remove();
+  breakpointCount--;
+  $controls.trigger('submit');
 });
 
-$typeScaleSelect.on('change', function (e) {
-  e.stopPropagation();
-  $typeScale.val($(this).val());
-  validateEvents();
-});
-
-$typeScale.on('keyup change', function () {
-  $typeScaleSelect.val(0);
-});
-
-$biggerFonts.on('change', function (e) {
-  validateEvents();
-});
-
-validateEvents();
+$btnAdd.trigger('click');
+$breakpoints.find('.breakpoint-em').html('<span class="infinite">∞</span>');
+$breakpoints.find('.btn-remove-breakpoint').remove();
+$btnAdd.trigger('click');
+$btnAdd.trigger('click');
+$btnAdd.trigger('click');
+// $controls.trigger('submit');

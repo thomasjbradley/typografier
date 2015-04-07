@@ -14,77 +14,26 @@
 <main class="main" role="main">
   <form id="controls">
     <table>
-      <tr>
-        <th scope="row" id="label-prefix" colspan="8"><label for="base-font-size">Body font-size</label></th>
-        <td colspan="6"><input type="number" id="base-font-size" value="100" min="0"></td>
-        <td colspan="10">
-          <input checked type="radio" name="font-size-unit" id="font-size-percent" value="percent">
-          <label for="font-size-percent">%</label>
-          <input type="radio" name="font-size-unit" id="font-size-px" value="px">
-          <label for="font-size-px">px</label>
-        </td>
-      </tr>
-      <tr>
-        <th scope="row" id="label-columns" colspan="8"><label for="base-line-height">Body line-height</label></th>
-        <td colspan="6"><input type="number" id="base-line-height" value="1.5" min="0" step="0.001"></td>
-        <td colspan="10">
-          <input checked type="radio" name="line-height-unit" id="line-height-multiplier" value="times">
-          <label for="line-height-multiplier">×</label>
-          <input type="radio" name="line-height-unit" id="line-height-px" value="px">
-          <label for="line-height-px">px</label>
-        </td>
-      </tr>
-      <tr>
-        <th scope="row" id="label-min-width" colspan="8"><label for="type-scale" id="label-type-scale">Type scale</label></th>
-        <td colspan="6"><input type="number" id="type-scale" value="1.125" min="0" step="0.001"></td>
-        <td colspan="10">
-          <select id="type-scale-select" aria-labelledby="label-type-scale">
-            <option value="1.067">1.067 — Minor Second</option>
-            <option value="1.125" selected>1.125 — Major Second</option>
-            <option value="1.200">1.200 — Minor Third</option>
-            <option value="1.250">1.250 — Major Third</option>
-            <option value="1.333">1.333 — Perfect Fourth</option>
-            <option value="1.414">1.414 — Augmented Fourth</option>
-            <option value="1.500">1.500 — Perfect Fifth</option>
-            <option value="1.600">1.600 — Minor Sixth</option>
-            <option value="1.618">1.618 — Golden Ratio</option>
-            <option value="1.667">1.667 — Major Sixth</option>
-            <option value="1.778">1.778 — Minor Seventh</option>
-            <option value="1.875">1.875 — Major Seventh</option>
-            <option value="2.000">2.000 — Octave</option>
-            <option value="2.500">2.500 — Major Tenth</option>
-            <option value="0">Custom Type Scale</option>
-          </select>
-        </td>
-      </tr>
-      <tr>
-        <th scope="row" id="label-columns" colspan="14"><label for="bigger-fonts">Bigger fonts on bigger screens</label></th>
-        <td colspan="10"><input type="checkbox" id="bigger-fonts" value="yes" checked></td>
-      </tr>
+     <thead>
+        <tr>
+          <th scope="col" id="label-min-width" colspan="5">Breakpoint</th>
+          <th scope="col" id="label-font-size" colspan="4">Font-size</th>
+          <th scope="col" id="label-line-height" colspan="5">Line-height</th>
+          <th scope="col" id="label-type-scale" colspan="10">Type scale</th>
+        </tr>
+      </thead>
+      <tbody id="breakpoints"></tbody>
     </table>
     <div class="extra-options">
       <strong class="options-title">Legacy support</strong>
       <input type="checkbox" id="legacy">
-      <label for="legacy">IE &lt;= 8, Opera Mini</label>
+      <label for="legacy">IE &lt;= 8, Opera&nbsp;Mini</label>
     </div>
   </form>
 
-  <style id="sample-styles">
-
-  </style>
-
-  <samp class="sample">
-    <p class="yotta-sample">Preview size for .yotta</p>
-    <p class="zetta-sample">Preview size for .zetta</p>
-    <p class="exa-sample">Preview size for &lt;h1&gt; &amp; .exa</p>
-    <p class="peta-sample">Preview size for &lt;h2&gt; &amp; .peta</p>
-    <p class="tera-sample">Preview size for &lt;h3&gt; &amp; .tera</p>
-    <p class="giga-sample">Preview size for &lt;h4&gt; &amp; .giga</p>
-    <p class="mega-sample">Preview size for &lt;h5&gt; &amp; .mega</p>
-    <p class="kilo-sample">Preview size for &lt;h6&gt;, .kilo &amp; default: &lt;p&gt;, etc.</p>
-    <p class="milli-sample">Preview size for .milli</p>
-    <p class="micro-sample">Preview size for .micro</p>
-  </samp>
+  <div class="add-breakpoint">
+    <button class="btn" id="btn-add-breakpoint">Add breakpoint</button>
+  </div>
 </main>
 
 <div class="output has-options">
@@ -141,21 +90,47 @@
   </aside>
 </div>
 
+<script type="text/template" data-template="breakpoint">
+  <tr class="breakpoint">
+    <td colspan="5" class="breakpoint-em">
+      <input class="min-width" type="number" value="{{min-width}}" aria-labelledby="label-min-width">
+      <span class="em">em</span>
+    </td>
+    <td colspan="4">
+      <input class="font-size" type="number" value="{{font-size}}" min="0" aria-labelledby="label-font-size">
+      <span class="percent">%</span>
+    </td>
+    <td colspan="5">
+      <input class="line-height" type="number" value="{{line-height}}" min="0" step="0.001" aria-labelledby="label-line-height">
+    </td>
+    <td colspan="8">
+      <select class="type-scale" aria-labelledby="label-type-scale">
+        <option value="1.067">1.067 — Minor Second</option>
+        <option value="1.125">1.125 — Major Second</option>
+        <option value="1.200">1.200 — Minor Third</option>
+        <option value="1.250">1.250 — Major Third</option>
+        <option value="1.333">1.333 — Perfect Fourth</option>
+        <option value="1.414">1.414 — Augmented Fourth</option>
+        <option value="1.500">1.500 — Perfect Fifth</option>
+        <option value="1.600">1.600 — Minor Sixth</option>
+        <option value="1.618">1.618 — Golden Ratio</option>
+        <option value="1.667">1.667 — Major Sixth</option>
+        <option value="1.778">1.778 — Minor Seventh</option>
+        <option value="1.875">1.875 — Major Seventh</option>
+        <option value="2.000">2.000 — Octave</option>
+        <option value="2.500">2.500 — Major Tenth</option>
+        <option value="0">Custom Type Scale</option>
+      </select>
+    </td>
+    <td class="remove-breakpoint-wrap" colspan="2">
+      <button class="btn btn-fatal btn-remove-breakpoint" title="Remove breakpoint"><span class="ir">Remove</span></button>
+    </td>
+  </tr>
+</script>
+
 <script type="text/template" data-template="css-base">html {
   font: normal {{base-font}}%/{{base-line-height}} Georgia,serif;
 }
-{{bigger-fonts}}
-
-h1, h2, h3, h4, h5, h6,
-p, ul, ol, dl, dd, figure,
-blockquote, details, hr,
-fieldset, pre, table {
-{{legacy}}
-  margin: 0 0 {{base-line-height-px}}px;
-{{/legacy}}
-  margin: 0 0 {{base-line-height}}rem;
-}
-{{type-scale}}
 
 sub,
 sup {
@@ -196,6 +171,42 @@ sub {
 .italic {
   font-style: italic;
 }
+{{main}}
+</script>
+
+<script type="text/template" data-template="css-element">
+{{selectors}} {
+{{legacy}}
+  font-size: {{font-size-px}}px;
+{{/legacy}}
+  font-size: {{font-size}}rem;
+  line-height: {{line-height}};
+}
+</script>
+
+<script type="text/template" data-template="css-sample">
+.sample {
+  font: normal {{base-font}}%/{{base-line-height}} Georgia,serif;
+}
+
+.sample p {
+  margin: 0 0 {{base-line-height}}rem;
+}
+
+{{type-scale}}
+</script>
+
+<script type="text/template" data-template="scale-base">
+h1, h2, h3, h4, h5, h6,
+p, ul, ol, dl, dd, figure,
+blockquote, details, hr,
+fieldset, pre, table {
+{{legacy}}
+  margin: 0 0 {{base-line-height-px}}px;
+{{/legacy}}
+  margin: 0 0 {{base-line-height}}rem;
+}
+{{type-scale}}
 
 .push {
 {{legacy}}
@@ -350,50 +361,19 @@ sub {
 }
 </script>
 
-<script type="text/template" data-template="css-element">
-{{selectors}} {
-{{legacy}}
-  font-size: {{font-size-px}}px;
-{{/legacy}}
-  font-size: {{font-size}}rem;
-  line-height: {{line-height}};
+<script type="text/template" data-template="media-query">
+@media only screen and (min-width: {{min-width}}em) {
+{{css}}
+
 }
 </script>
 
-<script type="text/template" data-template="css-sample">
-.sample {
-  font: normal {{base-font}}%/{{base-line-height}} Georgia,serif;
+<script type="text/template" data-template="media-query-font-size-only">
+@media only screen and (min-width: {{min-width}}em) {
+
+html {
+  font-size: {{font-size}}%;
 }
-
-.sample p {
-  margin: 0 0 {{base-line-height}}rem;
-}
-
-{{type-scale}}
-</script>
-
-<script type="text/template" data-template="bigger-fonts">
-@media only screen and (min-width: 60em) {
-
-  html {
-    font-size: 110%;
-  }
-
-}
-
-@media only screen and (min-width: 90em) {
-
-  html {
-    font-size: 120%;
-  }
-
-}
-
-@media only screen and (min-width: 120em) {
-
-  html {
-    font-size: 130%;
-  }
 
 }
 </script>

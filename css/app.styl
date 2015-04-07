@@ -19,14 +19,14 @@ body
   position absolute
   padding 1em
   top 0
-  width 50%
+  width 62.5%
 
 .output
   bottom 3.5rem
   position absolute
   right 0
   top 0
-  width 50%
+  width 37.5%
 
   background-color interface-grey
   border-left 1px solid interface-grey-dark
@@ -40,7 +40,7 @@ body
   padding 1em
   position fixed
   right 0
-  width 50%
+  width 37.5%
 
   background-color interface-grey
   border-left 1px solid interface-grey-dark
@@ -79,12 +79,11 @@ td
 
   text-align left
 
+th
+  padding-top 0
+
 tr
   border-bottom 1px solid interface-grey-dark
-
-tr:first-child th
-tr:first-child td
-  padding-top 0
 
 label
   vertical-align middle
@@ -92,7 +91,7 @@ label
 input
   padding 0.25em
   vertical-align middle
-  width 85%
+  width 70%
 
   border 1px solid interface-grey-dark
 
@@ -158,6 +157,40 @@ a:active
 
 .btn:hover::before
   color #fff
+
+.btn-remove-breakpoint
+  display none
+  height 2em
+  padding 0
+  position relative
+  width 2em
+
+  border-radius 1em
+
+.btn-remove-breakpoint::before
+  content "×"
+  left 50%
+  height 1em
+  margin -0.5em 0 0 -0.5em
+  position absolute
+  top 50%
+  width 1em
+
+  line-height 1em
+  text-align center
+
+.breakpoint:last-child .btn-remove-breakpoint
+  display inline-block
+
+.remove-breakpoint-wrap
+  text-align right
+
+.infinite
+  position relative
+  top 0.1em
+
+  font-size 1.5rem
+  line-height 1
 
 .sample
   display block
