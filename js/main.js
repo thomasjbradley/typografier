@@ -12,6 +12,7 @@ var
     { sel: ['.micro'], power: -2},
   ],
 
+  originalFontSize = 16,
   defaultMinWidths = [0, 38, 60, 90],
   defaultLineHeights = [1.3,  1.4, 1.5],
   defaultFontSizes = [100, 100, 100, 110, 120, 130],
@@ -23,7 +24,6 @@ var
 
   $controls = $('#controls'),
   $cssOutput = $('#output'),
-  $sampleOutput = $('#sample-styles'),
   $legacy = $('#legacy'),
 
   view = function view (name, vals) {
@@ -34,21 +34,22 @@ var
     return prepareTemplate(name, vals);
   },
 
+  convertToPx = function (val) {
+    return Math.round(val * originalFontSize);
+  },
+
   calculateValues = function calculateValues (baseFontSize, baseLineHeight, typeScale, power) {
-    var fontSize = (baseFontSize * Math.pow(typeScale, power)) / baseFontSize,
-      lineHeight = baseLineHeight / baseFontSize;
+    var fontSize = (baseFontSize / 100) * Math.pow(typeScale, power),
+      lineHeight = Math.ceil(fontSize / baseLineHeight) * (baseLineHeight / fontSize);
 
     return {
       fontSize: fontSize,
-      lineHeight: Math.ceil(fontSize / lineHeight) * (lineHeight / fontSize)
+      lineHeight: lineHeight,
     };
   },
 
   typeScales = function prepareCSS (baseFontSize, baseLineHeight, typeScale, templateView) {
-    var typeScaleValues = [],
-      css = '',
-      fontSize = (baseFontSize / 16) * 100,
-      lineHeight = baseLineHeight / baseFontSize;
+    var typeScaleValues = [], css = '';
 
     sizes.forEach(function (elem, index, arr) {
       var
@@ -60,25 +61,23 @@ var
         view('css-element', {
           'selectors': sel.join(', '),
           'font-size': vals.fontSize.toFixed(4),
-          'font-size-px': Math.round(vals.fontSize * baseFontSize),
+          'font-size-px': convertToPx(vals.fontSize),
           'line-height': vals.lineHeight.toFixed(4),
-          'line-height-px': Math.round(vals.lineHeight * baseLineHeight)
+          'line-height-px': convertToPx(vals.lineHeight)
         })
       );
     });
 
     css = view(templateView, {
-      'base-font': fontSize,
-      'base-font-px': baseFontSize,
-      'base-line-height': lineHeight,
-      'base-line-height-px': lineHeight * baseFontSize,
-      'line-height-half': (lineHeight / 2).toFixed(4),
-      'line-height-half-px': Math.round(baseLineHeight / 2),
-      'line-height-quarter': (lineHeight / 4).toFixed(4),
-      'line-height-quarter-px': Math.round(baseLineHeight / 4),
-      'line-height-double': (lineHeight * 2).toFixed(4),
-      'line-height-double-px': baseLineHeight * 2,
-      'type-scale': typeScaleValues.join(''),
+      'base-line-height': baseLineHeight,
+      'base-line-height-px': convertToPx(baseLineHeight),
+      'line-height-half': (baseLineHeight / 2).toFixed(4),
+      'line-height-half-px': convertToPx(Math.round(baseLineHeight / 2)),
+      'line-height-quarter': (baseLineHeight / 4).toFixed(4),
+      'line-height-quarter-px': convertToPx(Math.round(baseLineHeight / 4)),
+      'line-height-double': (baseLineHeight * 2).toFixed(4),
+      'line-height-double-px': convertToPx(baseLineHeight * 2),
+      'type-scale': typeScaleValues.join('')
     });
 
     return css;
@@ -88,48 +87,32 @@ $controls.on('keyup change submit', function (e) {
   var typePieces = [],
     output = '',
     defaultFontSize,
-    defaultLineHeight,
-    previousLineHeight = 0,
-    previousTypeScale = 0
+    defaultLineHeight
   ;
 
   e.preventDefault();
 
   $breakpoints.children().each(function () {
-    var percentFontSize = $(this).find('.font-size').val(),
-      lineHeightMultiplier = $(this).find('.line-height').val(),
-      baseFontSize = Math.round(percentFontSize * 16 / 100),
-      baseLineHeight = Math.round(baseFontSize * lineHeightMultiplier),
+    var baseFontSize = $(this).find('.font-size').val(),
+      baseLineHeight = $(this).find('.line-height').val(),
       typeScale = $(this).find('.type-scale').val(),
       $minWidth = $(this).find('.min-width'),
-      hasMinWidth = $minWidth.length,
-      isOnlyFontSizeChange = (previousLineHeight == lineHeightMultiplier && previousTypeScale == typeScale)
+      hasMinWidth = $minWidth.length
     ;
 
     if (hasMinWidth) {
-      if (isOnlyFontSizeChange) {
-        typePieces.push(
-          view('media-query-font-size-only', {
-              'min-width': $minWidth.val(),
-              'font-size': percentFontSize
-            })
-        );
-      } else {
-        typePieces.push(
-          view('media-query', {
-              'min-width': $minWidth.val(),
-              'css': typeScales(baseFontSize, baseLineHeight, typeScale, 'scale-base')
-            })
-        );
-      }
+      typePieces.push(
+        view('media-query', {
+            'min-width': $minWidth.val(),
+            'font-size': baseFontSize,
+            'css': typeScales(baseFontSize, baseLineHeight, typeScale, 'scale-base')
+          })
+      );
     } else {
-      defaultFontSize = percentFontSize;
-      defaultLineHeight = lineHeightMultiplier;
+      defaultFontSize = baseFontSize;
+      defaultLineHeight = baseLineHeight;
       typePieces = typePieces.concat(typeScales(baseFontSize, baseLineHeight, typeScale, 'scale-base'));
     }
-
-    previousLineHeight = lineHeightMultiplier;
-    previousTypeScale = typeScale;
   });
 
   output = [view('css-base', {

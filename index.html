@@ -184,18 +184,6 @@ sub {
 }
 </script>
 
-<script type="text/template" data-template="css-sample">
-.sample {
-  font: normal {{base-font}}%/{{base-line-height}} Georgia,serif;
-}
-
-.sample p {
-  margin: 0 0 {{base-line-height}}rem;
-}
-
-{{type-scale}}
-</script>
-
 <script type="text/template" data-template="scale-base">
 h1, h2, h3, h4, h5, h6,
 p, ul, ol, dl, dd, figure,
@@ -363,17 +351,11 @@ fieldset, pre, table {
 
 <script type="text/template" data-template="media-query">
 @media only screen and (min-width: {{min-width}}em) {
-{{css}}
-
-}
-</script>
-
-<script type="text/template" data-template="media-query-font-size-only">
-@media only screen and (min-width: {{min-width}}em) {
 
 html {
   font-size: {{font-size}}%;
 }
+{{css}}
 
 }
 </script>
