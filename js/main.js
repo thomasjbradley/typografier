@@ -105,6 +105,7 @@ $controls.on('keyup change submit', function (e) {
         view('media-query', {
             'min-width': $minWidth.val(),
             'font-size': baseFontSize,
+            'line-height': baseLineHeight,
             'css': typeScales(baseFontSize, baseLineHeight, typeScale, 'scale-base')
           })
       );
