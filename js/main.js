@@ -93,9 +93,9 @@ $controls.on('keyup change submit', function (e) {
   e.preventDefault();
 
   $breakpoints.children().each(function () {
-    var baseFontSize = $(this).find('.font-size').val(),
-      baseLineHeight = $(this).find('.line-height').val(),
-      typeScale = $(this).find('.type-scale').val(),
+    var baseFontSize = $.trim($(this).find('.font-size').val()),
+      baseLineHeight = $.trim($(this).find('.line-height').val()),
+      typeScale = $.trim($(this).find('.type-scale').val()),
       $minWidth = $(this).find('.min-width'),
       hasMinWidth = $minWidth.length
     ;
@@ -103,7 +103,7 @@ $controls.on('keyup change submit', function (e) {
     if (hasMinWidth) {
       typePieces.push(
         view('media-query', {
-            'min-width': $minWidth.val(),
+            'min-width': $.trim($minWidth.val()),
             'font-size': baseFontSize,
             'line-height': baseLineHeight,
             'css': typeScales(baseFontSize, baseLineHeight, typeScale, 'scale-base')
