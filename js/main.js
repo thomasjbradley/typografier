@@ -106,7 +106,9 @@ $controls.on('keyup change submit', function (e) {
             'min-width': $.trim($minWidth.val()),
             'font-size': baseFontSize,
             'line-height': baseLineHeight,
-            'css': typeScales(baseFontSize, baseLineHeight, typeScale, 'scale-base')
+            // This should be 100 because no matter what the base font of the HTML element is,
+            //   the rem calculations always treat the HTML font size as "1"
+            'css': typeScales(100, baseLineHeight, typeScale, 'scale-base')
           })
       );
     } else {
