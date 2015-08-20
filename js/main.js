@@ -129,7 +129,7 @@ $controls.on('keyup change submit', function (e) {
   });
 
   output = [view('css-base', {
-    'build': window.location.protocol + '//' + window.location.host + '/#' + buildHash.join(';'),
+    'build': window.location.protocol + '//' + window.location.host + window.location.pathname + '#' + buildHash.join(';'),
     'base-font': defaults[0][1],
     'base-line-height': defaults[0][2],
     'main': typePieces.join('')
