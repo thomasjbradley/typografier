@@ -93,7 +93,7 @@ $controls.on('keyup change submit', function (e) {
     output = '',
     defaultFontSize,
     defaultLineHeight,
-    buildHash = [];
+    buildHash = []
   ;
 
   e.preventDefault();
@@ -140,10 +140,8 @@ $controls.on('keyup change submit', function (e) {
 });
 
 $btnAdd.on('click', function () {
-  var lastWidth = defaults[defaults.length - 1][0],
-    lastSize = defaults[defaults.length - 1][1],
-    lastLineHeight = defaults[defaults.length - 1][2],
-    lastTypeScale = defaults[defaults.length - 1][3],
+  var
+    minWidthIncrement = 20,
     data = []
   ;
 
@@ -151,10 +149,10 @@ $btnAdd.on('click', function () {
     data = defaults[breakpointCount];
   } else {
     data = [
-      lastWidth,
-      lastSize,
-      lastLineHeight,
-      lastTypeScale
+      parseInt(defaults[defaults.length - 1][0], 10) + (breakpointCount - (defaults.length - 1)) * minWidthIncrement,
+      defaults[defaults.length - 1][1],
+      defaults[defaults.length - 1][2],
+      defaults[defaults.length - 1][3]
     ];
   }
 
@@ -195,4 +193,3 @@ defaults.forEach(function() {
 
 $breakpoints.find('.breakpoint:first-child .breakpoint-em').html('<span class="infinite">∞</span>');
 $breakpoints.find('.breakpoint:first-child .btn-remove-breakpoint').remove();
-// $controls.trigger('submit');
