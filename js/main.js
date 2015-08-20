@@ -1,4 +1,6 @@
 var
+  hash = window.location.hash.replace(/#/, ''),
+  hashBits,
   sizes = [
     { sel: ['.yotta'], power: 7},
     { sel: ['.zetta'], power: 6},
@@ -13,10 +15,12 @@ var
   ],
 
   originalFontSize = 16,
-  defaultMinWidths = [0, 38, 60, 90],
-  defaultLineHeights = [1.3,  1.4, 1.5],
-  defaultFontSizes = [100, 110, 120, 130, 130, 130],
-  defaultTypeScales = [1.067, 1.125],
+  defaults = [
+    [0, 100, 1.3, 1.067],
+    [38, 110, 1.4, 1.125],
+    [60, 120, 1.5, 1.125],
+    [90, 130, 1.5, 1.125]
+  ];
   breakpointCount = 0,
 
   $breakpoints = $('#breakpoints'),
@@ -97,7 +101,7 @@ $controls.on('keyup change submit', function (e) {
       baseLineHeight = $.trim($(this).find('.line-height').val()),
       typeScale = $.trim($(this).find('.type-scale').val()),
       $minWidth = $(this).find('.min-width'),
-      hasMinWidth = $minWidth.length
+      hasMinWidth = (parseInt($.trim($minWidth.val()), 10) > 0)
     ;
 
     if (hasMinWidth) {
@@ -119,8 +123,8 @@ $controls.on('keyup change submit', function (e) {
   });
 
   output = [view('css-base', {
-    'base-font': defaultFontSize,
-    'base-line-height': defaultLineHeight,
+    'base-font': defaults[0][1],
+    'base-line-height': defaults[0][2],
     'main': typePieces.join('')
   })];
 
@@ -128,22 +132,33 @@ $controls.on('keyup change submit', function (e) {
 });
 
 $btnAdd.on('click', function () {
-  var lastWidth = defaultMinWidths.length - 1,
-    lastSize = defaultFontSizes.length - 1,
-    lastLineHeight = defaultLineHeights.length - 1,
-    lastTypeScale = defaultTypeScales.length - 1,
-    minWidthIncrement = 20,
-    extra = (new Array(100)).join("x");
+  var lastWidth = defaults[defaults.length - 1][0],
+    lastSize = defaults[defaults.length - 1][1],
+    lastLineHeight = defaults[defaults.length - 1][2],
+    lastTypeScale = defaults[defaults.length - 1][3],
+    data = []
+  ;
+
+  if (defaults[breakpointCount]) {
+    data = defaults[breakpointCount];
+  } else {
+    data = [
+      lastWidth,
+      lastSize,
+      lastLineHeight,
+      lastTypeScale
+    ];
+  }
 
   $breakpoints.append(view('breakpoint', {
       'id': breakpointCount,
-      'min-width': defaultMinWidths[breakpointCount] || defaultMinWidths[lastWidth] + ((breakpointCount - lastWidth) * minWidthIncrement),
-      'font-size': defaultFontSizes[breakpointCount] || defaultFontSizes[lastSize],
-      'line-height': defaultLineHeights[breakpointCount] || defaultLineHeights[lastLineHeight]
+      'min-width': data[0],
+      'font-size': data[1],
+      'line-height': data[2]
     })
   );
 
-  $breakpoints.find('tr:last-child .type-scale').val(defaultTypeScales[breakpointCount] || defaultTypeScales[lastTypeScale]);
+  $breakpoints.find('tr:last-child .type-scale').val(data[3]);
 
   breakpointCount++;
 
@@ -157,10 +172,19 @@ $controls.on('click', '.btn-remove-breakpoint', function (e) {
   $controls.trigger('submit');
 });
 
+if (hash) {
+  hashBits = hash.split(';');
+  hashBits.forEach(function (item) {
+    var mq = item.split(',');
+    console.log(mq);
+  });
+}
+
 $btnAdd.trigger('click');
-$breakpoints.find('.breakpoint-em').html('<span class="infinite">∞</span>');
-$breakpoints.find('.btn-remove-breakpoint').remove();
 $btnAdd.trigger('click');
 $btnAdd.trigger('click');
 $btnAdd.trigger('click');
+
+$breakpoints.find('.breakpoint:first-child .breakpoint-em').html('<span class="infinite">∞</span>');
+$breakpoints.find('.breakpoint:first-child .btn-remove-breakpoint').remove();
 // $controls.trigger('submit');
