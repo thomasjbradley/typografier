@@ -92,7 +92,8 @@ $controls.on('keyup change submit', function (e) {
   var typePieces = [],
     output = '',
     defaultFontSize,
-    defaultLineHeight
+    defaultLineHeight,
+    buildHash = [];
   ;
 
   e.preventDefault();
@@ -102,13 +103,16 @@ $controls.on('keyup change submit', function (e) {
       baseLineHeight = $.trim($(this).find('.line-height').val()),
       typeScale = $.trim($(this).find('.type-scale').val()),
       $minWidth = $(this).find('.min-width'),
-      hasMinWidth = (parseInt($.trim($minWidth.val()), 10) > 0)
+      minWidthVal = $.trim($minWidth.val()),
+      hasMinWidth = (parseInt(minWidthVal, 10) > 0)
     ;
 
     if (hasMinWidth) {
+      buildHash.push([minWidthVal, baseFontSize, baseLineHeight, typeScale]);
+
       typePieces.push(
         view('media-query', {
-            'min-width': $.trim($minWidth.val()),
+            'min-width': minWidthVal,
             'font-size': baseFontSize,
             'line-height': baseLineHeight,
             // This should be 100 because no matter what the base font of the HTML element is,
@@ -119,17 +123,20 @@ $controls.on('keyup change submit', function (e) {
     } else {
       defaultFontSize = baseFontSize;
       defaultLineHeight = baseLineHeight;
+      buildHash.push([0, baseFontSize, baseLineHeight, typeScale]);
       typePieces = typePieces.concat(typeScales(baseFontSize, baseLineHeight, typeScale, 'scale-base'));
     }
   });
 
   output = [view('css-base', {
+    'build': window.location.protocol + '//' + window.location.host + '/#' + buildHash.join(';'),
     'base-font': defaults[0][1],
     'base-line-height': defaults[0][2],
     'main': typePieces.join('')
   })];
 
   $cssOutput.html(output);
+  window.location.hash = buildHash.join(';');
 });
 
 $btnAdd.on('click', function () {
