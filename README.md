@@ -4,7 +4,7 @@
 
 ---
 
-### [☛ Type system tutorial](https://github.com/algonquindesign/html-css/tree/gh-pages/modular-typography)
+### [☛ Type system tutorial](http://learn-the-web.algonquindesign.ca/topics/modular-typography/)
 
 ### [☛ Videos for modular type](https://www.youtube.com/playlist?list=PLWjCJDeWfDde5lA0t6QGVvaqpkqRREe2l)
 
@@ -16,6 +16,6 @@ This tool is introduced to the students after they learn the “long, hard, stup
 
 ## License
 
-Gridifier is licensed under the [New BSD license](LICENSE.txt).
+Typografier is licensed under the [New BSD license](LICENSE.txt).
 
 [Paper icon](http://thenounproject.com/term/paper/29062/) copyright Yazmin Alanis.
