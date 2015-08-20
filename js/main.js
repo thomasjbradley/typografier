@@ -15,7 +15,7 @@ var
   originalFontSize = 16,
   defaultMinWidths = [0, 38, 60, 90],
   defaultLineHeights = [1.3,  1.4, 1.5],
-  defaultFontSizes = [100, 100, 100, 110, 120, 130],
+  defaultFontSizes = [100, 110, 120, 130, 130, 130],
   defaultTypeScales = [1.067, 1.125],
   breakpointCount = 0,
 
