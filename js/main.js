@@ -211,5 +211,5 @@ $breakpoints.find('.breakpoint:first-child .btn-remove-breakpoint').remove();
 
 $('#preview').on('click', function (e) {
   e.preventDefault();
-  previewWin = window.open('/preview/', 'preview');
+  previewWin = window.open('/preview/' + window.location.hash, 'preview');
 });
