@@ -7,7 +7,7 @@
   <title>Preview · Typografier</title>
   <meta name="description" content="A preview specimen for the Typografier modular &amp; responsive type system.">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link href="/css/grid.css" rel="stylesheet">
+  <link href="/css/grid.css?v={{site.version}}" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Lato:400,400italic,700" rel="stylesheet">
   <link href="/favicon.ico" rel="shortcut icon">
   <style>
@@ -18,6 +18,7 @@
       -ms-text-size-adjust: 100%;
       -webkit-text-size-adjust: 100%;
       text-size-adjust: 100%;
+      color: #333;
     }
     *, *::before, *::after {
       box-sizing: inherit;
@@ -26,6 +27,8 @@
     img { display: block; width: 100%; height: auto; }
     a { color: steelblue; }
     .wrapper { margin-left: auto; margin-right: auto; max-width: 45em; }
+    hr { border: 0; border-bottom: 3px solid #e2e2e2; }
+    footer { color: #666; }
   </style>
   <style id="output"></style>
 </head>
@@ -35,6 +38,8 @@
   <div class="wrapper gutter">
     <h1>Typografier preview</h1>
   </div>
+
+  <hr>
 
   <div class="grid wrapper gutter">
     <div class="unit xs-1">
@@ -142,13 +147,18 @@
   </div>
 </main>
 
+<footer class="micro text-center">
+  <hr>
+  <p>Check out <a href="http://gridifier.web-dev.tools"><strong>Gridifer</strong></a> for this grid system.</p>
+</footer>
+
 <aside class="main" role="main" hidden>
   {% include interface-form.html %}
 </aside>
 
 {% include templates.html %}
 
-<script src="/js/typografier.min.js"></script>
+<script src="/js/typografier.min.js?v={{site.version}}"></script>
 
 </body>
 </html>
