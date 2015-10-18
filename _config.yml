@@ -1,0 +1,12 @@
+permalink: pretty
+
+exclude:
+  - README.md
+  - LICENSE
+  - Gruntfile.coffee
+  - package.json
+  - .editorconfig
+  - .gitignore
+  - tmp
+  - node_modules
+  - css/*.styl

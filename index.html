@@ -1,3 +1,5 @@
+---
+---
 <!DOCTYPE html>
 <html lang="en-ca">
 <head>
@@ -5,36 +7,21 @@
   <title>Typografier—a modular typography building tool</title>
   <meta name="description" content="Typografier is a tool that generates a modular &amp; harmonious responsive type system for modern websites.">
   <meta name="viewport" content="width=1200">
-  <link href="css/typografier.min.css" rel="stylesheet">
-  <link href="favicon.ico" rel="shortcut icon">
+  <link href="/css/typografier.min.css" rel="stylesheet">
+  <link href="/favicon.ico" rel="shortcut icon">
 </head>
 <body>
 
 <h1 class="common-bar__title kilo">Typografier<span class="common-bar__title__subhead">—a modular typography building tool</span></h1>
 
 <main class="main" role="main">
-  <form id="controls">
-    <table>
-     <thead>
-        <tr>
-          <th scope="col" id="label-min-width" colspan="5">Breakpoint</th>
-          <th scope="col" id="label-font-size" colspan="4">Font-size</th>
-          <th scope="col" id="label-line-height" colspan="5">Line-height</th>
-          <th scope="col" id="label-type-scale" colspan="10">Type scale</th>
-        </tr>
-      </thead>
-      <tbody id="breakpoints"></tbody>
-    </table>
-    <div class="extra-options">
-      <strong class="options-title">Legacy support</strong>
-      <input type="checkbox" id="legacy">
-      <label for="legacy">IE &lt;= 8</label>
-    </div>
-  </form>
+  {% include interface-form.html %}
 
   <div class="add-breakpoint">
-    <button class="btn" id="btn-add-breakpoint">Add breakpoint</button>
+    <button class="btn btn-right" id="btn-add-breakpoint">Add breakpoint</button>
   </div>
+
+  <button class="btn btn-left" id="preview">Preview</button>
 </main>
 
 <div class="output has-options">
@@ -99,286 +86,7 @@
   </aside>
 </div>
 
-<script type="text/template" data-template="breakpoint">
-  <tr class="breakpoint">
-    <td colspan="5" class="breakpoint-em">
-      <input class="min-width" type="number" value="{{min-width}}" aria-labelledby="label-min-width">
-      <span class="em">em</span>
-    </td>
-    <td colspan="4">
-      <input class="font-size" type="number" value="{{font-size}}" min="0" aria-labelledby="label-font-size">
-      <span class="percent">%</span>
-    </td>
-    <td colspan="5">
-      <input class="line-height" type="number" value="{{line-height}}" min="0" step="0.001" aria-labelledby="label-line-height">
-    </td>
-    <td colspan="8">
-      <select class="type-scale" aria-labelledby="label-type-scale">
-        <option value="1.067">1.067 — Minor Second</option>
-        <option value="1.125">1.125 — Major Second</option>
-        <option value="1.200">1.200 — Minor Third</option>
-        <option value="1.250">1.250 — Major Third</option>
-        <option value="1.333">1.333 — Perfect Fourth</option>
-        <option value="1.414">1.414 — Augmented Fourth</option>
-        <option value="1.500">1.500 — Perfect Fifth</option>
-        <option value="1.600">1.600 — Minor Sixth</option>
-        <option value="1.618">1.618 — Golden Ratio</option>
-        <option value="1.667">1.667 — Major Sixth</option>
-        <option value="1.778">1.778 — Minor Seventh</option>
-        <option value="1.875">1.875 — Major Seventh</option>
-        <option value="2.000">2.000 — Octave</option>
-        <option value="2.500">2.500 — Major Tenth</option>
-      </select>
-    </td>
-    <td class="remove-breakpoint-wrap" colspan="2">
-      <button class="btn btn-fatal btn-remove-breakpoint" title="Remove breakpoint"><span class="ir">Remove</span></button>
-    </td>
-  </tr>
-</script>
-
-<script type="text/template" data-template="css-base">/*
-  Typografier || Code released under the UNLICENSE
-  {{build}}
-
-*/
-
-html {
-  font-size: {{base-font}}%;
-  line-height: {{base-line-height}};
-}
-
-sub,
-sup {
-  font-size: 75%;
-  line-height: 1px;
-  position: relative;
-  vertical-align: baseline;
-}
-
-sup {
-  top: -0.5em;
-}
-
-sub {
-  bottom: -0.25em;
-}
-
-pre, code, kbd, samp {
-  font-size: {{base-font}}%;
-}
-
-.text-left {
-  text-align: left;
-}
-
-.text-right {
-  text-align: right;
-}
-
-.text-center {
-  text-align: center;
-}
-
-.normal {
-  font-weight: normal;
-}
-
-.bold {
-  font-weight: bold;
-}
-
-.italic {
-  font-style: italic;
-}
-{{main}}
-</script>
-
-<script type="text/template" data-template="css-element">
-{{selectors}} {
-{{legacy}}
-  font-size: {{font-size-px}}px;
-{{/legacy}}
-  font-size: {{font-size}}rem;
-  line-height: {{line-height}};
-}
-</script>
-
-<script type="text/template" data-template="scale-base">
-h1, h2, h3, h4, h5, h6,
-p, ul, ol, dl, dd, figure,
-blockquote, details, hr,
-fieldset, pre, table {
-{{legacy}}
-  margin: 0 0 {{base-line-height-px}}px;
-{{/legacy}}
-  margin: 0 0 {{base-line-height}}rem;
-}
-{{type-scale}}
-
-.push {
-{{legacy}}
-  margin-bottom: {{base-line-height-px}}px;
-{{/legacy}}
-  margin-bottom: {{base-line-height}}rem;
-}
-
-.push-none, .push-0 {
-  margin-bottom: 0;
-}
-
-.push-double, .push-2 {
-{{legacy}}
-  margin-bottom: {{line-height-double-px}}px;
-{{/legacy}}
-  margin-bottom: {{line-height-double}}rem;
-}
-
-.push-half, .push-1-2 {
-{{legacy}}
-  margin-bottom: {{line-height-half-px}}px;
-{{/legacy}}
-  margin-bottom: {{line-height-half}}rem;
-}
-
-.push-quarter, .push-1-4 {
-{{legacy}}
-  margin-bottom: {{line-height-quarter-px}}px;
-{{/legacy}}
-  margin-bottom: {{line-height-quarter}}rem;
-}
-
-.pad-top, .pad-t {
-{{legacy}}
-  padding-top: {{base-line-height-px}}px;
-{{/legacy}}
-  padding-top: {{base-line-height}}rem;
-}
-
-.pad-bottom, .pad-b {
-{{legacy}}
-  padding-bottom: {{base-line-height-px}}px;
-{{/legacy}}
-  padding-bottom: {{base-line-height}}rem;
-}
-
-.pad-top-double, .pad-t-2 {
-{{legacy}}
-  padding-top: {{line-height-double-px}}px;
-{{/legacy}}
-  padding-top: {{line-height-double}}rem;
-}
-
-.pad-bottom-double, .pad-b-2 {
-{{legacy}}
-  padding-bottom: {{line-height-double-px}}px;
-{{/legacy}}
-  padding-bottom: {{line-height-double}}rem;
-}
-
-.pad-top-half, .pad-t-1-2 {
-{{legacy}}
-  padding-top: {{line-height-half-px}}px;
-{{/legacy}}
-  padding-top: {{line-height-half}}rem;
-}
-
-.pad-bottom-half, .pad-b-1-2 {
-{{legacy}}
-  padding-bottom: {{line-height-half-px}}px;
-{{/legacy}}
-  padding-bottom: {{line-height-half}}rem;
-}
-
-.pad-top-quarter, .pad-t-1-4 {
-{{legacy}}
-  padding-top: {{line-height-quarter-px}}px;
-{{/legacy}}
-  padding-top: {{line-height-quarter}}rem;
-}
-
-.pad-bottom-quarter, .pad-b-1-4 {
-{{legacy}}
-  padding-bottom: {{line-height-quarter-px}}px;
-{{/legacy}}
-  padding-bottom: {{line-height-quarter}}rem;
-}
-
-.island {
-{{legacy}}
-  padding: {{base-line-height-px}}px;
-{{/legacy}}
-  padding: {{base-line-height}}rem;
-}
-
-.island-double, .island-2 {
-{{legacy}}
-  padding: {{line-height-double-px}}px;
-{{/legacy}}
-  padding: {{line-height-double}}rem;
-}
-
-.island-half, .island-1-2 {
-{{legacy}}
-  padding: {{line-height-half-px}}px;
-{{/legacy}}
-  padding: {{line-height-half}}rem;
-}
-
-.island-quarter, .island-1-4 {
-{{legacy}}
-  padding: {{line-height-quarter-px}}px;
-{{/legacy}}
-  padding: {{line-height-quarter}}rem;
-}
-
-.gutter {
-{{legacy}}
-  padding-left: {{base-line-height-px}}px;
-  padding-right: {{base-line-height-px}}px;
-{{/legacy}}
-  padding-left: {{base-line-height}}rem;
-  padding-right: {{base-line-height}}rem;
-}
-
-.gutter-double, .gutter-2 {
-{{legacy}}
-  padding-left: {{line-height-double-px}}px;
-  padding-right: {{line-height-double-px}}px;
-{{/legacy}}
-  padding-left: {{line-height-double}}rem;
-  padding-right: {{line-height-double}}rem;
-}
-
-.gutter-half, .gutter-1-2 {
-{{legacy}}
-  padding-left: {{line-height-half-px}}px;
-  padding-right: {{line-height-half-px}}px;
-{{/legacy}}
-  padding-left: {{line-height-half}}rem;
-  padding-right: {{line-height-half}}rem;
-}
-
-.gutter-quarter, .gutter-1-4 {
-{{legacy}}
-  padding-left: {{line-height-quarter-px}}px;
-  padding-right: {{line-height-quarter-px}}px;
-{{/legacy}}
-  padding-left: {{line-height-quarter}}rem;
-  padding-right: {{line-height-quarter}}rem;
-}
-</script>
-
-<script type="text/template" data-template="media-query">
-@media only screen and (min-width: {{min-width}}em) {
-
-html {
-  font-size: {{font-size}}%;
-  line-height: {{line-height}};
-}
-{{css}}
-
-}
-</script>
+{% include templates.html %}
 
 <script src="js/typografier.min.js"></script>
 

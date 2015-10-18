@@ -1,6 +1,8 @@
 var
   hash = window.location.hash.replace(/#/, ''),
   hashBits,
+  previewWin,
+
   sizes = [
     { sel: ['.yotta'], power: 7},
     { sel: ['.zetta'], power: 6},
@@ -86,96 +88,108 @@ var
     });
 
     return css;
-  };
+  },
 
-$controls.on('keyup change submit', function (e) {
-  var typePieces = [],
-    output = '',
-    defaultFontSize,
-    defaultLineHeight,
-    buildHash = []
-  ;
-
-  e.preventDefault();
-
-  $breakpoints.children().each(function () {
-    var baseFontSize = $.trim($(this).find('.font-size').val()),
-      baseLineHeight = $.trim($(this).find('.line-height').val()),
-      typeScale = $.trim($(this).find('.type-scale').val()),
-      $minWidth = $(this).find('.min-width'),
-      minWidthVal = $.trim($minWidth.val()),
-      hasMinWidth = (parseInt(minWidthVal, 10) > 0)
+  addNewBreakpoint = function () {
+    var
+      minWidthIncrement = 20,
+      data = []
     ;
 
-    if (hasMinWidth) {
-      buildHash.push([minWidthVal, baseFontSize, baseLineHeight, typeScale]);
-
-      typePieces.push(
-        view('media-query', {
-            'min-width': minWidthVal,
-            'font-size': baseFontSize,
-            'line-height': baseLineHeight,
-            // This should be 100 because no matter what the base font of the HTML element is,
-            //   the rem calculations always treat the HTML font size as "1"
-            'css': typeScales(100, baseLineHeight, typeScale, 'scale-base')
-          })
-      );
+    if (defaults[breakpointCount]) {
+      data = defaults[breakpointCount];
     } else {
-      defaultFontSize = baseFontSize;
-      defaultLineHeight = baseLineHeight;
-      buildHash.push([0, baseFontSize, baseLineHeight, typeScale]);
-      typePieces = typePieces.concat(typeScales(baseFontSize, baseLineHeight, typeScale, 'scale-base'));
+      data = [
+        parseInt(defaults[defaults.length - 1][0], 10) + (breakpointCount - (defaults.length - 1)) * minWidthIncrement,
+        defaults[defaults.length - 1][1],
+        defaults[defaults.length - 1][2],
+        defaults[defaults.length - 1][3]
+      ];
     }
-  });
 
-  output = [view('css-base', {
-    'build': window.location.protocol + '//' + window.location.host + window.location.pathname + '#' + buildHash.join(';'),
-    'base-font': defaults[0][1],
-    'base-line-height': defaults[0][2],
-    'main': typePieces.join('')
-  })];
+    $breakpoints.append(view('breakpoint', {
+        'id': breakpointCount,
+        'min-width': data[0],
+        'font-size': data[1],
+        'line-height': data[2]
+      })
+    );
 
-  $cssOutput.html(output);
-  window.location.hash = buildHash.join(';');
+    $breakpoints.find('tr:last-child .type-scale').val(data[3]);
+
+    breakpointCount++;
+  },
+
+  buildOutput = function () {
+    var typePieces = [],
+      output = '',
+      defaultFontSize,
+      defaultLineHeight,
+      buildHash = []
+    ;
+
+    $breakpoints.children().each(function () {
+      var baseFontSize = $.trim($(this).find('.font-size').val()),
+        baseLineHeight = $.trim($(this).find('.line-height').val()),
+        typeScale = $.trim($(this).find('.type-scale').val()),
+        $minWidth = $(this).find('.min-width'),
+        minWidthVal = $.trim($minWidth.val()),
+        hasMinWidth = (parseInt(minWidthVal, 10) > 0)
+      ;
+
+      if (hasMinWidth) {
+        buildHash.push([minWidthVal, baseFontSize, baseLineHeight, typeScale]);
+
+        typePieces.push(
+          view('media-query', {
+              'min-width': minWidthVal,
+              'font-size': baseFontSize,
+              'line-height': baseLineHeight,
+              // This should be 100 because no matter what the base font of the HTML element is,
+              //   the rem calculations always treat the HTML font size as "1"
+              'css': typeScales(100, baseLineHeight, typeScale, 'scale-base')
+            })
+        );
+      } else {
+        defaultFontSize = baseFontSize;
+        defaultLineHeight = baseLineHeight;
+        buildHash.push([0, baseFontSize, baseLineHeight, typeScale]);
+        typePieces = typePieces.concat(typeScales(baseFontSize, baseLineHeight, typeScale, 'scale-base'));
+      }
+    });
+
+    output = [view('css-base', {
+      'build': window.location.protocol + '//' + window.location.host + window.location.pathname + '#' + buildHash.join(';'),
+      'base-font': defaults[0][1],
+      'base-line-height': defaults[0][2],
+      'main': typePieces.join('')
+    })];
+
+    $cssOutput.text(output);
+    window.location.hash = buildHash.join(';');
+
+    if (previewWin) {
+      previewWin.location = window.location.href.replace('#', 'preview/#');
+      previewWin.location.reload();
+    }
+   }
+;
+
+$controls.on('keyup change submit', function (e) {
+  e.preventDefault();
+  buildOutput();
 });
 
 $btnAdd.on('click', function () {
-  var
-    minWidthIncrement = 20,
-    data = []
-  ;
-
-  if (defaults[breakpointCount]) {
-    data = defaults[breakpointCount];
-  } else {
-    data = [
-      parseInt(defaults[defaults.length - 1][0], 10) + (breakpointCount - (defaults.length - 1)) * minWidthIncrement,
-      defaults[defaults.length - 1][1],
-      defaults[defaults.length - 1][2],
-      defaults[defaults.length - 1][3]
-    ];
-  }
-
-  $breakpoints.append(view('breakpoint', {
-      'id': breakpointCount,
-      'min-width': data[0],
-      'font-size': data[1],
-      'line-height': data[2]
-    })
-  );
-
-  $breakpoints.find('tr:last-child .type-scale').val(data[3]);
-
-  breakpointCount++;
-
-  $controls.trigger('submit');
+  addNewBreakpoint();
+  buildOutput();
 });
 
 $controls.on('click', '.btn-remove-breakpoint', function (e) {
   e.preventDefault();
   $(this).parent().parent().remove();
   breakpointCount--;
-  $controls.trigger('submit');
+  buildOutput();
 });
 
 if (hash) {
@@ -188,8 +202,14 @@ if (hash) {
 }
 
 defaults.forEach(function() {
-  $btnAdd.trigger('click');
+  addNewBreakpoint();
+  buildOutput();
 });
 
 $breakpoints.find('.breakpoint:first-child .breakpoint-em').html('<span class="infinite">∞</span>');
 $breakpoints.find('.breakpoint:first-child .btn-remove-breakpoint').remove();
+
+$('#preview').on('click', function (e) {
+  e.preventDefault();
+  previewWin = window.open('/preview/', 'preview');
+});
