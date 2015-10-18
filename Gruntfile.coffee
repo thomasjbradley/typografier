@@ -34,7 +34,6 @@ module.exports = (grunt) ->
           urlfunc: 'embedurl'
         files:
           'css/typografier.min.css': [
-            'css/normalize.styl'
             'css/main.styl'
           ]
 
