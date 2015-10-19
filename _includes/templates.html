@@ -47,8 +47,11 @@ html {
   line-height: {{base-line-height}};
 }
 
-sub,
-sup {
+a {
+  background-color: transparent;
+}
+
+sub, sup {
   font-size: 75%;
   line-height: 1px;
   position: relative;
@@ -65,6 +68,44 @@ sub {
 
 pre, code, kbd, samp {
   font-size: {{base-font}}%;
+}
+
+abbr[title] {
+  border-bottom: 1px dotted;
+}
+
+b, strong {
+  font-weight: bold;
+}
+
+dfn, caption {
+  font-style: italic;
+}
+
+mark {
+  background: #ff0;
+  color: #000;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid;
+  height: 0;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+}
+
+th, td {
+  border-bottom: 1px solid;
+  text-align: left;
+}
+
+thead th {
+  vertical-align: bottom;
 }
 
 .text-left {
@@ -224,7 +265,8 @@ fieldset, pre, table {
   padding: {{line-height-half}}rem;
 }
 
-.island-quarter, .island-1-4 {
+.island-quarter, .island-1-4,
+td, th, fieldset {
 {{legacy}}
   padding: {{line-height-quarter-px}}px;
 {{/legacy}}

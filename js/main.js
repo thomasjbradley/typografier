@@ -11,7 +11,7 @@ var
     { sel: ['h3', '.tera'], power: 3},
     { sel: ['h4', '.giga'], power: 2},
     { sel: ['h5', '.mega'], power: 1},
-    { sel: ['h6', '.kilo'], power: 0},
+    { sel: ['h6', '.kilo', 'input'], power: 0},
     { sel: ['small', '.milli'], power: -1},
     { sel: ['.micro'], power: -2},
   ],
