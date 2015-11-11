@@ -45,9 +45,21 @@ var
     return Math.round(val * originalFontSize);
   },
 
-  calculateValues = function calculateValues (baseFontSize, baseLineHeight, typeScale, power) {
+  calculateLineHeight = function (baseLineHeight, power, fontSize) {
+    var lh = Math.ceil(fontSize / baseLineHeight) * (baseLineHeight / fontSize);
+
+    // Fixes a few line-heights that were too loose or too tight
+    // .33 is just a magic number after about 3 hours of futzing about
+    if (power >= 3) {
+      lh = Math.ceil(fontSize / (baseLineHeight * .33)) * ((baseLineHeight * .33) / fontSize);
+    }
+
+    return lh;
+  }
+
+  calculateValues = function (baseFontSize, baseLineHeight, typeScale, power) {
     var fontSize = (baseFontSize / 100) * Math.pow(typeScale, power),
-      lineHeight = Math.ceil(fontSize / baseLineHeight) * (baseLineHeight / fontSize);
+      lineHeight = calculateLineHeight(baseLineHeight, power, fontSize);
 
     return {
       fontSize: fontSize,
@@ -55,7 +67,7 @@ var
     };
   },
 
-  typeScales = function prepareCSS (baseFontSize, baseLineHeight, typeScale, templateView) {
+  typeScales = function (baseFontSize, baseLineHeight, typeScale, templateView) {
     var typeScaleValues = [], css = '';
 
     sizes.forEach(function (elem, index, arr) {
