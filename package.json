@@ -1,6 +1,5 @@
 {
   "name": "typografier",
-  "version": "2.3.0",
   "private": true,
   "devDependencies": {
     "grunt": "^0.4.5",
