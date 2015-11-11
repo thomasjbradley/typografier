@@ -215,7 +215,7 @@ if (hash) {
 
   hashBits.forEach(function (item) {
     var data = item.split(',');
-console.log(data);
+
     data[4] = data[4] === '1' ? true : false;
     defaults.push(data);
   });
