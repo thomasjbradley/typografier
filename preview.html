@@ -8,12 +8,12 @@
   <meta name="description" content="A preview specimen for the Typografier modular &amp; responsive type system.">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link href="/css/grid.css?v={{site.version}}" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Lato:400,400italic,700" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,400italic|Lato:400,700,400italic|PT+Sans:400,700,400italic|Merriweather:400,400italic,700|Playfair+Display:400,400italic,700' rel='stylesheet' type='text/css'>
   <link href="/favicon.ico" rel="shortcut icon">
   <style id="output"></style>
   <style>
     html {
-      font-family: Lato, sans-serif;
+      font-family: "Lato";
       box-sizing: border-box;
       -moz-text-size-adjust: 100%;
       -ms-text-size-adjust: 100%;
@@ -31,6 +31,9 @@
     .table-wrapper { max-width: 100%; position: relative; overflow-x: auto; }
     table { min-width: 30em; }
     footer { color: #666; }
+    input, label { cursor: pointer; }
+    input { position: relative; top: -0.1em; }
+    .typeface-wrap { white-space: nowrap; }
   </style>
 </head>
 <body>
@@ -38,6 +41,36 @@
 <main class="pad-t">
   <div class="wrapper gutter">
     <h1>Typografier preview</h1>
+    <form id="typeface-form" class="push">
+      <span class="typeface-wrap">
+        <input type="radio" id="lato" checked name="typeface">
+        <label for="lato">Lato</label>
+      </span>
+      <span class="typeface-wrap">
+        <input type="radio" id="open" name="typeface">
+        <label for="open">Open Sans</label>
+      </span>
+      <span class="typeface-wrap">
+        <input type="radio" id="playfair" name="typeface">
+        <label for="playfair">Playfair Display</label>
+      </span>
+      <span class="typeface-wrap">
+        <input type="radio" id="merri" name="typeface">
+        <label for="merri">Merriweather</label>
+      </span>
+      <span class="typeface-wrap">
+        <input type="radio" id="pt" name="typeface">
+        <label for="pt">PT Serif</label>
+      </span>
+      <span class="typeface-wrap">
+        <input type="radio" id="sans" name="typeface">
+        <label for="sans">sans-serif</label>
+      </span>
+      <span class="typeface-wrap">
+        <input type="radio" id="serif" name="typeface">
+        <label for="serif">serif</label>
+      </span>
+    </form>
   </div>
 
   <hr>
@@ -72,6 +105,7 @@
       <h3>Heading level 3</h3>
       <ol>
         <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
+        <li>Aliquam tincidunt mauris eu risus.</li>
         <li>Aliquam tincidunt mauris eu risus.</li>
       </ol>
     </div>
@@ -233,6 +267,10 @@
 {% include templates.html %}
 
 <script src="/js/typografier.min.js?v={{site.version}}"></script>
-
+<script>
+document.getElementById('typeface-form').addEventListener('change', function () {
+  document.documentElement.style.fontFamily = document.querySelector('[name="typeface"]:checked + label').innerHTML;
+});
+</script>
 </body>
 </html>
