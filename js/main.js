@@ -18,10 +18,10 @@ var
 
   originalFontSize = 16,
   superDefaults = [
-    [0, 100, 1.3, 1.067],
-    [38, 110, 1.4, 1.125],
-    [60, 120, 1.5, 1.125],
-    [90, 130, 1.5, 1.125]
+    [0, 100, 1.3, 1.067, 0],
+    [38, 110, 1.4, 1.125, 1],
+    [60, 120, 1.5, 1.125, 1],
+    [90, 130, 1.5, 1.125, 1]
   ],
   defaults = superDefaults,
   breakpointCount = 0,
@@ -49,7 +49,7 @@ var
     var lh = Math.ceil(fontSize / baseLineHeight) * (baseLineHeight / fontSize);
 
     // Fixes a few line-heights that were too loose or too tight
-    // .33 is just a magic number after about 3 hours of futzing about
+    // .33 is just a magic number after about 3 hours of futzing
     if (power >= 3) {
       lh = Math.ceil(fontSize / (baseLineHeight * .33)) * ((baseLineHeight * .33) / fontSize);
     }
@@ -67,7 +67,7 @@ var
     };
   },
 
-  typeScales = function (baseFontSize, baseLineHeight, typeScale, templateView) {
+  typeScales = function (baseFontSize, baseLineHeight, typeScale, hangPunc, templateView) {
     var typeScaleValues = [], css = '';
 
     sizes.forEach(function (elem, index, arr) {
@@ -82,7 +82,7 @@ var
           'font-size': vals.fontSize.toFixed(4),
           'font-size-px': convertToPx(vals.fontSize),
           'line-height': vals.lineHeight.toFixed(4),
-          'line-height-px': convertToPx(vals.lineHeight)
+          'line-height-px': convertToPx(vals.lineHeight),
         })
       );
     });
@@ -96,7 +96,9 @@ var
       'line-height-quarter-px': convertToPx(Math.round(baseLineHeight / 4)),
       'line-height-double': (baseLineHeight * 2).toFixed(4),
       'line-height-double-px': convertToPx(baseLineHeight * 2),
-      'type-scale': typeScaleValues.join('')
+      'type-scale': typeScaleValues.join(''),
+      'hang-punc': hangPunc,
+      'not-hang-punc': !hangPunc
     });
 
     return css;
@@ -115,7 +117,8 @@ var
         parseInt(defaults[defaults.length - 1][0], 10) + (breakpointCount - (defaults.length - 1)) * minWidthIncrement,
         defaults[defaults.length - 1][1],
         defaults[defaults.length - 1][2],
-        defaults[defaults.length - 1][3]
+        defaults[defaults.length - 1][3],
+        defaults[defaults.length - 1][4]
       ];
     }
 
@@ -123,7 +126,8 @@ var
         'id': breakpointCount,
         'min-width': data[0],
         'font-size': data[1],
-        'line-height': data[2]
+        'line-height': data[2],
+        'hang-punc': data[4] ? 'checked' : ''
       })
     );
 
@@ -146,11 +150,12 @@ var
         typeScale = $.trim($(this).find('.type-scale').val()),
         $minWidth = $(this).find('.min-width'),
         minWidthVal = $.trim($minWidth.val()),
-        hasMinWidth = (parseInt(minWidthVal, 10) > 0)
+        hasMinWidth = (parseInt(minWidthVal, 10) > 0),
+        hangPunc = $(this).find('.hang-punc').is(':checked')
       ;
 
       if (hasMinWidth) {
-        buildHash.push([minWidthVal, baseFontSize, baseLineHeight, typeScale]);
+        buildHash.push([minWidthVal, baseFontSize, baseLineHeight, typeScale, hangPunc ? 1 : 0]);
 
         typePieces.push(
           view('media-query', {
@@ -159,14 +164,14 @@ var
               'line-height': baseLineHeight,
               // This should be 100 because no matter what the base font of the HTML element is,
               //   the rem calculations always treat the HTML font size as "1"
-              'css': typeScales(100, baseLineHeight, typeScale, 'scale-base')
+              'css': typeScales(100, baseLineHeight, typeScale, hangPunc, 'scale-base')
             })
         );
       } else {
         defaultFontSize = baseFontSize;
         defaultLineHeight = baseLineHeight;
-        buildHash.push([0, baseFontSize, baseLineHeight, typeScale]);
-        typePieces = typePieces.concat(typeScales(baseFontSize, baseLineHeight, typeScale, 'scale-base'));
+        buildHash.push([0, baseFontSize, baseLineHeight, typeScale, hangPunc ? 1 : 0]);
+        typePieces = typePieces.concat(typeScales(baseFontSize, baseLineHeight, typeScale, hangPunc, 'scale-base'));
       }
     });
 
@@ -209,7 +214,10 @@ if (hash) {
   defaults = [];
 
   hashBits.forEach(function (item) {
-    defaults.push(item.split(','));
+    var data = item.split(',');
+console.log(data);
+    data[4] = data[4] === '1' ? true : false;
+    defaults.push(data);
   });
 }
 

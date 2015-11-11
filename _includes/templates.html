@@ -1,7 +1,7 @@
 {% raw %}
 <script type="text/template" data-template="breakpoint">
   <tr class="breakpoint">
-    <td colspan="5" class="breakpoint-em">
+    <td colspan="4" class="breakpoint-em">
       <input class="min-width" type="number" value="{{min-width}}" aria-labelledby="label-min-width">
       <span class="em">em</span>
     </td>
@@ -9,10 +9,10 @@
       <input class="font-size" type="number" value="{{font-size}}" min="0" aria-labelledby="label-font-size">
       <span class="percent">%</span>
     </td>
-    <td colspan="5">
+    <td colspan="4">
       <input class="line-height" type="number" value="{{line-height}}" min="0" step="0.001" aria-labelledby="label-line-height">
     </td>
-    <td colspan="8">
+    <td colspan="7">
       <select class="type-scale" aria-labelledby="label-type-scale">
         <option value="1.067">1.067 — Minor Second</option>
         <option value="1.125">1.125 — Major Second</option>
@@ -29,6 +29,9 @@
         <option value="2.000">2.000 — Octave</option>
         <option value="2.500">2.500 — Major Tenth</option>
       </select>
+    </td>
+    <td colspan="3">
+      <input class="hang-punc" type="checkbox" {{hang-punc}} aria-labelledby="label-hang-punc">
     </td>
     <td class="remove-breakpoint-wrap" colspan="2">
       <button class="btn btn-fatal btn-remove-breakpoint" title="Remove breakpoint"><span class="ir">Remove</span></button>
@@ -159,6 +162,22 @@ fieldset, pre, table {
   margin: 0 0 {{base-line-height}}rem;
 }
 {{type-scale}}
+
+{{hang-punc}}
+ul, ol {
+  padding-left: 0;
+}
+{{/hang-punc}}
+
+{{not-hang-punc}}
+ul {
+  padding-left: 1em;
+}
+
+ol {
+  padding-left: 1.6em;
+}
+{{/not-hang-punc}}
 
 .push {
 {{legacy}}
