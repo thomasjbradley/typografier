@@ -28,6 +28,8 @@
     img { display: block; width: 100%; height: auto; }
     a { color: steelblue; }
     .wrapper { margin-left: auto; margin-right: auto; max-width: 45em; }
+    .table-wrapper { max-width: 100%; position: relative; overflow-x: auto; }
+    table { min-width: 30em; }
     footer { color: #666; }
   </style>
 </head>
@@ -120,76 +122,87 @@
   </div>
 
   <div class="wrapper gutter">
-    <table>
+    <div class="table-wrapper">
+      <table>
 
-      <caption>Information on three awesome dinosaurs.</caption>
+        <caption>Information on three awesome dinosaurs.</caption>
 
-      <thead>
-        <tr>
-          <th scope="col" rowspan="2">Name</th>
-          <th scope="col" rowspan="2">Period</th>
-          <th scope="col" rowspan="2">Discovery</th>
-          <th scope="col" colspan="2">Size</th>
-        </tr>
-        <tr>
-          <th scope="col">Length</th>
-          <th scope="col">Mass</th>
-        </tr>
-      </thead>
+        <thead>
+          <tr>
+            <th scope="col" rowspan="2">Name</th>
+            <th scope="col" rowspan="2">Period</th>
+            <th scope="col" rowspan="2">Discovery</th>
+            <th scope="col" colspan="2">Size</th>
+          </tr>
+          <tr>
+            <th scope="col">Length</th>
+            <th scope="col">Mass</th>
+          </tr>
+        </thead>
 
-      <tbody>
-        <tr>
-          <th scope="row">Stegosaurus</th>
-          <td>Late Jurassic</td>
-          <td>
-            <time datetime="1877">1877</time>
-          </td>
-          <td>
-            <data value="9">9 m</data>
-          </td>
-          <td>4.5 t</td>
-        </tr>
-        <tr>
-          <th scope="row">Apatosaurus</th>
-          <td>Jurassic Period</td>
-          <td>1877</td>
-          <td>23 m</td>
-          <td>35 t</td>
-        </tr>
-        <tr>
-          <th scope="row">Tyrannosaurus</th>
-          <td>Late Cretaceous</td>
-          <td>1905</td>
-          <td>12.3 m</td>
-          <td>6.8 t</td>
-        </tr>
-      </tbody>
+        <tbody>
+          <tr>
+            <th scope="row">Stegosaurus</th>
+            <td>Late Jurassic</td>
+            <td>
+              <time datetime="1877">1877</time>
+            </td>
+            <td>
+              <data value="9">9 m</data>
+            </td>
+            <td>4.5 t</td>
+          </tr>
+          <tr>
+            <th scope="row">Apatosaurus</th>
+            <td>Jurassic Period</td>
+            <td>1877</td>
+            <td>23 m</td>
+            <td>35 t</td>
+          </tr>
+          <tr>
+            <th scope="row">Tyrannosaurus</th>
+            <td>Late Cretaceous</td>
+            <td>1905</td>
+            <td>12.3 m</td>
+            <td>6.8 t</td>
+          </tr>
+        </tbody>
 
-    </table>
+      </table>
+    </div>
   </div>
 
   <hr>
 
   <div class="wrapper gutter">
     <h2 class="yotta">Yotta size, 2 larger than &lt;h1&gt;</h2>
+    <p class="yotta">Lorem ipsum dolor sit amet, consectetuer adipiscing commodo ligula elit.</p>
     <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
     <h2 class="zetta">Zetta size, 1 larger than &lt;h1&gt;</h2>
+    <p class="zetta">Lorem ipsum dolor sit amet, consectetuer adipiscing commodo ligula elit.</p>
     <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
     <h2 class="exa">Exa size, &lt;h1&gt;</h2>
+    <p class="exa">Lorem ipsum dolor sit amet, consectetuer adipiscing commodo ligula elit.</p>
     <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
     <h2 class="peta">Peta size, &lt;h2&gt;</h2>
+    <p class="peta">Lorem ipsum dolor sit amet, consectetuer adipiscing commodo ligula elit.</p>
     <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
     <h2 class="tera">Tera size, &lt;h3&gt;</h2>
+    <p class="tera">Lorem ipsum dolor sit amet, consectetuer adipiscing commodo ligula elit. Aenean massa.</p>
     <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
     <h2 class="giga">Giga size, &lt;h4&gt;</h2>
+    <p class="giga">Lorem ipsum dolor sit amet, consectetuer adipiscing commodo ligula elit. Cum sociis natoque penatibus et magnis dis parturient montes.</p>
     <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
     <h2 class="mega">Mega size, &lt;h5&gt;</h2>
+    <p class="mega">Lorem ipsum dolor sit amet, consectetuer adipiscing commodo ligula elit. Cum sociis natoque penatibus et magnis dis parturient montes.</p>
     <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
     <h2 class="kilo">Kilo size, &lt;h6&gt; &amp; &lt;p&gt;, etc.</h2>
     <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
     <h2 class="milli">Milli size, 1 smaller than body copy, same as &lt;small&gt;</h2>
+    <p class="milli">Lorem ipsum dolor sit amet, consectetuer adipiscing commodo ligula elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
     <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
     <h2 class="micro">Micro size, 2 smaller than body copy</h2>
+    <p class="micro">Lorem ipsum dolor sit amet, consectetuer adipiscing commodo ligula elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
     <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
   </div>
 
@@ -209,6 +222,7 @@
 
 <footer class="micro text-center">
   <hr>
+  <p class="push-0">See the <a href="http://learn-the-web.algonquindesign.ca/topics/typografier-cheat-sheet/"><strong>Typografier cheat sheet</strong></a> for all the different classes.</p>
   <p>Check out <a href="http://gridifier.web-dev.tools"><strong>Gridifer</strong></a> for this grid system.</p>
 </footer>
 
