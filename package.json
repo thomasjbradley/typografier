@@ -15,8 +15,8 @@
   },
   "scripts": {
     "grunt": "grunt",
-    "grunt-watch": "grunt",
-    "jekyll-watch": "jekyll serve",
+    "server-watch": "jekyll serve",
+    "build-watch": "grunt",
     "build": "grunt build"
   }
 }
