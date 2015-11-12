@@ -46,15 +46,25 @@ var
   },
 
   calculateLineHeight = function (baseLineHeight, power, fontSize) {
-    var lh = Math.ceil(fontSize / baseLineHeight) * (baseLineHeight / fontSize);
+    var
+      lhRatioMax = 1.9, // Magic numbers, determined by looking at nice line-heights for bunch of text
+      lhRatioMin = 1.3,
+      ratio = baseLineHeight / fontSize,
+      increment = parseFloat(baseLineHeight) / 4,
+      newLineHeight = parseFloat(baseLineHeight)
+    ;
 
-    // Fixes a few line-heights that were too loose or too tight
-    // .33 is just a magic number after about 3 hours of futzing
-    if (power >= 3) {
-      lh = Math.ceil(fontSize / (baseLineHeight * .33)) * ((baseLineHeight * .33) / fontSize);
+    while (ratio < lhRatioMin) {
+      newLineHeight += increment;
+      ratio = newLineHeight / fontSize;
     }
 
-    return lh;
+    while (ratio > lhRatioMax) {
+      newLineHeight -= increment;
+      ratio = newLineHeight / fontSize;
+    }
+
+    return newLineHeight;
   }
 
   calculateValues = function (baseFontSize, baseLineHeight, typeScale, power) {
