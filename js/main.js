@@ -1,206 +1,210 @@
-var
-  hash = window.location.hash.replace(/#/, ''),
-  hashBits,
-  previewWin,
+'use strict';
 
-  sizes = [
-    { sel: ['.yotta'], power: 7},
-    { sel: ['.zetta'], power: 6},
-    { sel: ['h1', '.exa'], power: 5},
-    { sel: ['h2', '.peta'], power: 4},
-    { sel: ['h3', '.tera'], power: 3},
-    { sel: ['h4', '.giga'], power: 2},
-    { sel: ['h5', '.mega'], power: 1},
-    { sel: ['h6', '.kilo', 'input', 'textarea'], power: 0},
-    { sel: ['small', '.milli'], power: -1},
-    { sel: ['.micro'], power: -2},
-  ],
+var hash = window.location.hash.replace(/#/, '');
+var hashBits;
+var previewWin;
 
-  originalFontSize = 16,
-  superDefaults = [
-    [0, 100, 1.3, 1.067, 0],
-    [38, 110, 1.4, 1.125, 1],
-    [60, 120, 1.5, 1.125, 1],
-    [90, 130, 1.5, 1.125, 1]
-  ],
-  defaults = superDefaults,
-  breakpointCount = 0,
+var sizes = [
+  { sel: ['.yotta'], power: 7},
+  { sel: ['.zetta'], power: 6},
+  { sel: ['h1', '.exa'], power: 5},
+  { sel: ['h2', '.peta'], power: 4},
+  { sel: ['h3', '.tera'], power: 3},
+  { sel: ['h4', '.giga'], power: 2},
+  { sel: ['h5', '.mega'], power: 1},
+  { sel: ['h6', '.kilo', 'input', 'textarea'], power: 0},
+  { sel: ['small', '.milli'], power: -1},
+  { sel: ['.micro'], power: -2},
+];
 
-  $breakpoints = $('#breakpoints'),
-  $btnAdd = $('#btn-add-breakpoint'),
+var originalFontSize = 16;
+var superDefaults = [
+  [0, 100, 1.3, 1.067, 0],
+  [38, 110, 1.4, 1.125, 1],
+  [60, 120, 1.5, 1.125, 1],
+  [90, 130, 1.5, 1.125, 1]
+];
+var defaults = superDefaults;
+var breakpointCount = 0;
 
-  $controls = $('#controls'),
-  $cssOutput = $('#output'),
-  $legacy = $('#legacy'),
+var $breakpoints = $('#breakpoints');
+var $btnAdd = $('#btn-add-breakpoint');
+var $controls = $('#controls');
+var $cssOutput = $('#output');
+var $legacy = $('#legacy');
 
-  view = function view (name, vals) {
-    if (!vals) vals = {};
+var view = function view (name, vals) {
+  if (!vals) vals = {};
 
-    vals.legacy = $legacy.is(':checked');
+  vals.legacy = $legacy.is(':checked');
 
-    return prepareTemplate(name, vals);
-  },
+  return prepareTemplate(name, vals);
+};
 
-  convertToPx = function (val) {
-    return Math.round(val * originalFontSize);
-  },
+var convertToPx = function (val) {
+  return Math.round(val * originalFontSize);
+};
 
-  calculateLineHeight = function (baseLineHeight, power, fontSize) {
-    var
-      lhRatioMax = 1.9, // Magic numbers, determined by looking at nice line-heights for bunch of text
-      lhRatioMin = 1.3,
-      ratio = baseLineHeight / fontSize,
-      increment = parseFloat(baseLineHeight) / 4,
-      newLineHeight = parseFloat(baseLineHeight)
-    ;
+var calculateLineHeight = function (baseLineHeight, power, fontSize) {
+  var lhRatioMax = 1.9; // Magic numbers, determined by looking at nice line-heights for bunch of text
+  var lhRatioMin = 1.3;
+  var ratio = baseLineHeight / fontSize;
+  var increment = parseFloat(baseLineHeight) / 4;
+  var newLineHeight = parseFloat(baseLineHeight);
 
-    while (ratio < lhRatioMin) {
-      newLineHeight += increment;
-      ratio = newLineHeight / fontSize;
-    }
-
-    while (ratio > lhRatioMax) {
-      newLineHeight -= increment;
-      ratio = newLineHeight / fontSize;
-    }
-
-    return newLineHeight;
+  while (ratio < lhRatioMin) {
+    newLineHeight += increment;
+    ratio = newLineHeight / fontSize;
   }
 
-  calculateValues = function (baseFontSize, baseLineHeight, typeScale, power) {
-    var fontSize = (baseFontSize / 100) * Math.pow(typeScale, power),
-      lineHeight = calculateLineHeight(baseLineHeight, power, fontSize);
+  while (ratio > lhRatioMax) {
+    newLineHeight -= increment;
+    ratio = newLineHeight / fontSize;
+  }
 
-    return {
-      fontSize: fontSize,
-      lineHeight: lineHeight,
-    };
-  },
+  return newLineHeight;
+};
 
-  typeScales = function (baseFontSize, baseLineHeight, typeScale, hangPunc, templateView) {
-    var typeScaleValues = [], css = '';
+var calculateValues = function (baseFontSize, baseLineHeight, typeScale, power) {
+  var fontSize = (baseFontSize / 100) * Math.pow(typeScale, power);
+  var lineHeight = calculateLineHeight(baseLineHeight, power, fontSize);
 
-    sizes.forEach(function (elem, index, arr) {
-      var
-        vals = calculateValues(baseFontSize, baseLineHeight, typeScale, sizes[index].power),
-        sel = sizes[index].sel
-      ;
+  return {
+    fontSize: fontSize,
+    lineHeight: lineHeight,
+  };
+};
 
-      typeScaleValues.push(
-        view('css-element', {
-          'selectors': sel.join(', '),
-          'font-size': vals.fontSize.toFixed(4),
-          'font-size-px': convertToPx(vals.fontSize),
-          'line-height': vals.lineHeight.toFixed(4),
-          'line-height-px': convertToPx(vals.lineHeight),
-        })
-      );
-    });
+var typeScales = function (baseFontSize, baseLineHeight, typeScale, hangPunc, templateView) {
+  var typeScaleValues = [];
+  var css = '';
 
-    css = view(templateView, {
-      'base-line-height': baseLineHeight,
-      'base-line-height-px': convertToPx(baseLineHeight),
-      'line-height-half': (baseLineHeight / 2).toFixed(4),
-      'line-height-half-px': convertToPx(Math.round(baseLineHeight / 2)),
-      'line-height-quarter': (baseLineHeight / 4).toFixed(4),
-      'line-height-quarter-px': convertToPx(Math.round(baseLineHeight / 4)),
-      'line-height-double': (baseLineHeight * 2).toFixed(4),
-      'line-height-double-px': convertToPx(baseLineHeight * 2),
-      'type-scale': typeScaleValues.join(''),
-      'hang-punc': hangPunc,
-      'not-hang-punc': !hangPunc
-    });
+  sizes.forEach(function (elem, index, arr) {
+    var vals = calculateValues(baseFontSize, baseLineHeight, typeScale, sizes[index].power);
+    var sel = sizes[index].sel;
 
-    return css;
-  },
-
-  addNewBreakpoint = function () {
-    var
-      minWidthIncrement = 20,
-      data = []
-    ;
-
-    if (defaults[breakpointCount]) {
-      data = defaults[breakpointCount];
-    } else {
-      data = [
-        parseInt(defaults[defaults.length - 1][0], 10) + (breakpointCount - (defaults.length - 1)) * minWidthIncrement,
-        defaults[defaults.length - 1][1],
-        defaults[defaults.length - 1][2],
-        defaults[defaults.length - 1][3],
-        defaults[defaults.length - 1][4]
-      ];
-    }
-
-    $breakpoints.append(view('breakpoint', {
-        'id': breakpointCount,
-        'min-width': data[0],
-        'font-size': data[1],
-        'line-height': data[2],
-        'hang-punc': data[4] ? 'checked' : ''
+    typeScaleValues.push(
+      view('css-element', {
+        'selectors': sel.join(',\n'),
+        'font-size': vals.fontSize.toFixed(4),
+        'font-size-px': convertToPx(vals.fontSize),
+        'line-height': vals.lineHeight.toFixed(4),
+        'line-height-px': convertToPx(vals.lineHeight),
       })
     );
+  });
 
-    $breakpoints.find('tr:last-child .type-scale').val(data[3]);
+  css = view(templateView, {
+    'base-line-height': baseLineHeight,
+    'base-line-height-px': convertToPx(baseLineHeight),
+    'line-height-half': (baseLineHeight / 2).toFixed(4),
+    'line-height-half-px': convertToPx(Math.round(baseLineHeight / 2)),
+    'line-height-quarter': (baseLineHeight / 4).toFixed(4),
+    'line-height-quarter-px': convertToPx(Math.round(baseLineHeight / 4)),
+    'line-height-double': (baseLineHeight * 2).toFixed(4),
+    'line-height-double-px': convertToPx(baseLineHeight * 2),
+    'type-scale': typeScaleValues.join(''),
+    'hang-punc': hangPunc,
+    'not-hang-punc': !hangPunc
+  });
 
-    breakpointCount++;
-  },
+  return css;
+};
 
-  buildOutput = function () {
-    var typePieces = [],
-      output = '',
-      defaultFontSize,
-      defaultLineHeight,
-      buildHash = []
-    ;
+var indent = function (code) {
+  var codeLines = code.split('\n');
 
-    $breakpoints.children().each(function () {
-      var baseFontSize = $.trim($(this).find('.font-size').val()),
-        baseLineHeight = $.trim($(this).find('.line-height').val()),
-        typeScale = $.trim($(this).find('.type-scale').val()),
-        $minWidth = $(this).find('.min-width'),
-        minWidthVal = $.trim($minWidth.val()),
-        hasMinWidth = (parseInt(minWidthVal, 10) > 0),
-        hangPunc = $(this).find('.hang-punc').is(':checked')
-      ;
+  codeLines.forEach(function (line, i) {
+    if (!line) return;
 
-      if (hasMinWidth) {
-        buildHash.push([minWidthVal, baseFontSize, baseLineHeight, typeScale, hangPunc ? 1 : 0]);
+    codeLines[i] = '  ' + line;
+  });
 
-        typePieces.push(
-          view('media-query', {
-              'min-width': minWidthVal,
-              'font-size': baseFontSize,
-              'line-height': baseLineHeight,
-              // This should be 100 because no matter what the base font of the HTML element is,
-              //   the rem calculations always treat the HTML font size as "1"
-              'css': typeScales(100, baseLineHeight, typeScale, hangPunc, 'scale-base')
-            })
-        );
-      } else {
-        defaultFontSize = baseFontSize;
-        defaultLineHeight = baseLineHeight;
-        buildHash.push([0, baseFontSize, baseLineHeight, typeScale, hangPunc ? 1 : 0]);
-        typePieces = typePieces.concat(typeScales(baseFontSize, baseLineHeight, typeScale, hangPunc, 'scale-base'));
-      }
-    });
+  return codeLines.join('\n');
+};
 
-    output = [view('css-base', {
-      'build': window.location.protocol + '//' + window.location.host + window.location.pathname + '#' + buildHash.join(';'),
-      'base-font': defaults[0][1],
-      'base-line-height': defaults[0][2],
-      'main': typePieces.join('')
-    })];
+var addNewBreakpoint = function () {
+  var minWidthIncrement = 20;
+  var data = [];
 
-    $cssOutput.text(output);
-    window.location.hash = buildHash.join(';');
+  if (defaults[breakpointCount]) {
+    data = defaults[breakpointCount];
+  } else {
+    data = [
+      parseInt(defaults[defaults.length - 1][0], 10) + (breakpointCount - (defaults.length - 1)) * minWidthIncrement,
+      defaults[defaults.length - 1][1],
+      defaults[defaults.length - 1][2],
+      defaults[defaults.length - 1][3],
+      defaults[defaults.length - 1][4]
+    ];
+  }
 
-    if (previewWin) {
-      previewWin.location = window.location.href.replace('#', 'preview/#');
-      previewWin.location.reload();
+  $breakpoints.append(view('breakpoint', {
+      'id': breakpointCount,
+      'min-width': data[0],
+      'font-size': data[1],
+      'line-height': data[2],
+      'hang-punc': data[4] ? 'checked' : ''
+    })
+  );
+
+  $breakpoints.find('tr:last-child .type-scale').val(data[3]);
+
+  breakpointCount++;
+};
+
+var buildOutput = function () {
+  var typePieces = [];
+  var output = '';
+  var defaultFontSize;
+  var defaultLineHeight;
+  var buildHash = [];
+
+  $breakpoints.children().each(function () {
+    var baseFontSize = $.trim($(this).find('.font-size').val());
+    var baseLineHeight = $.trim($(this).find('.line-height').val());
+    var typeScale = $.trim($(this).find('.type-scale').val());
+    var $minWidth = $(this).find('.min-width');
+    var minWidthVal = $.trim($minWidth.val());
+    var hasMinWidth = (parseInt(minWidthVal, 10) > 0);
+    var hangPunc = $(this).find('.hang-punc').is(':checked');
+
+    if (hasMinWidth) {
+      buildHash.push([minWidthVal, baseFontSize, baseLineHeight, typeScale, hangPunc ? 1 : 0]);
+
+      typePieces.push(
+        view('media-query', {
+            'min-width': minWidthVal,
+            'font-size': baseFontSize,
+            'line-height': baseLineHeight,
+            // This should be 100 because no matter what the base font of the HTML element is,
+            //   the rem calculations always treat the HTML font size as "1"
+            'css': indent(typeScales(100, baseLineHeight, typeScale, hangPunc, 'scale-base'))
+          })
+      );
+    } else {
+      defaultFontSize = baseFontSize;
+      defaultLineHeight = baseLineHeight;
+      buildHash.push([0, baseFontSize, baseLineHeight, typeScale, hangPunc ? 1 : 0]);
+      typePieces = typePieces.concat(typeScales(baseFontSize, baseLineHeight, typeScale, hangPunc, 'scale-base'));
     }
-   }
-;
+  });
+
+  output = [view('css-base', {
+    'build': window.location.protocol + '//' + window.location.host + window.location.pathname + '#' + buildHash.join(';'),
+    'base-font': defaults[0][1],
+    'base-line-height': defaults[0][2],
+    'main': typePieces.join('')
+  })];
+
+  $cssOutput.text(output);
+  window.location.hash = buildHash.join(';');
+
+  if (previewWin) {
+    previewWin.location = window.location.href.replace('#', 'preview/#');
+    previewWin.location.reload();
+  }
+};
 
 $controls.on('keyup change submit', function (e) {
   e.preventDefault();

@@ -54,7 +54,8 @@ a {
   background-color: transparent;
 }
 
-sub, sup {
+sub,
+sup {
   font-size: 75%;
   line-height: 1px;
   position: relative;
@@ -69,7 +70,10 @@ sub {
   bottom: -0.25em;
 }
 
-pre, code, kbd, samp {
+pre,
+code,
+kbd,
+samp {
   font-size: {{base-font}}%;
 }
 
@@ -78,11 +82,13 @@ abbr[title] {
   text-decoration: none;
 }
 
-b, strong {
+b,
+strong {
   font-weight: bold;
 }
 
-dfn, caption {
+dfn,
+caption {
   font-style: italic;
 }
 
@@ -98,7 +104,8 @@ table {
   width: 100%;
 }
 
-th, td {
+th,
+td {
   border-bottom: 1px solid;
   text-align: left;
 }
@@ -153,7 +160,24 @@ thead th {
 </script>
 
 <script type="text/template" data-template="scale-base">
-h1, h2, h3, h4, h5, h6, p, ul, ol, dl, dd, figure, blockquote, details, hr, fieldset, pre, table {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+dl,
+dd,
+figure,
+blockquote,
+details,
+hr,
+fieldset,
+pre,
+table {
 {{legacy}}
   margin: 0 0 {{base-line-height-px}}px;
 {{/legacy}}
@@ -162,7 +186,8 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, dl, dd, figure, blockquote, details, hr, fiel
 {{type-scale}}
 
 {{hang-punc}}
-ul, ol {
+ul,
+ol {
   padding-left: 0;
 }
 
@@ -191,102 +216,117 @@ ol {
   margin-bottom: {{base-line-height}}rem;
 }
 
-.push-none, .push-0 {
+.push-none,
+.push-0 {
   margin-bottom: 0;
 }
 
-.push-double, .push-2 {
+.push-double,
+.push-2 {
 {{legacy}}
   margin-bottom: {{line-height-double-px}}px;
 {{/legacy}}
   margin-bottom: {{line-height-double}}rem;
 }
 
-.push-half, .push-1-2 {
+.push-half,
+.push-1-2 {
 {{legacy}}
   margin-bottom: {{line-height-half-px}}px;
 {{/legacy}}
   margin-bottom: {{line-height-half}}rem;
 }
 
-.push-quarter, .push-1-4 {
+.push-quarter,
+.push-1-4 {
 {{legacy}}
   margin-bottom: {{line-height-quarter-px}}px;
 {{/legacy}}
   margin-bottom: {{line-height-quarter}}rem;
 }
 
-.push-right-quarter, .push-r-1-4 {
+.push-right-quarter,
+.push-r-1-4 {
 {{legacy}}
   margin-right: {{line-height-quarter-px}}px;
 {{/legacy}}
   margin-right: {{line-height-quarter}}rem;
 }
 
-.push-right-half, .push-r-1-2 {
+.push-right-half,
+.push-r-1-2 {
 {{legacy}}
   margin-right: {{line-height-half-px}}px;
 {{/legacy}}
   margin-right: {{line-height-half}}rem;
 }
 
-.push-right, .push-r {
+.push-right,
+.push-r {
 {{legacy}}
   margin-right: {{base-line-height-px}}px;
 {{/legacy}}
   margin-right: {{base-line-height}}rem;
 }
 
-.pad-top, .pad-t {
+.pad-top,
+.pad-t {
 {{legacy}}
   padding-top: {{base-line-height-px}}px;
 {{/legacy}}
   padding-top: {{base-line-height}}rem;
 }
 
-.pad-bottom, .pad-b {
+.pad-bottom,
+.pad-b {
 {{legacy}}
   padding-bottom: {{base-line-height-px}}px;
 {{/legacy}}
   padding-bottom: {{base-line-height}}rem;
 }
 
-.pad-top-double, .pad-t-2 {
+.pad-top-double,
+.pad-t-2 {
 {{legacy}}
   padding-top: {{line-height-double-px}}px;
 {{/legacy}}
   padding-top: {{line-height-double}}rem;
 }
 
-.pad-bottom-double, .pad-b-2 {
+.pad-bottom-double,
+.pad-b-2 {
 {{legacy}}
   padding-bottom: {{line-height-double-px}}px;
 {{/legacy}}
   padding-bottom: {{line-height-double}}rem;
 }
 
-.pad-top-half, .pad-t-1-2 {
+.pad-top-half,
+.pad-t-1-2 {
 {{legacy}}
   padding-top: {{line-height-half-px}}px;
 {{/legacy}}
   padding-top: {{line-height-half}}rem;
 }
 
-.pad-bottom-half, .pad-b-1-2 {
+.pad-bottom-half,
+.pad-b-1-2 {
 {{legacy}}
   padding-bottom: {{line-height-half-px}}px;
 {{/legacy}}
   padding-bottom: {{line-height-half}}rem;
 }
 
-.pad-top-quarter, .pad-t-1-4 {
+.pad-top-quarter,
+.pad-t-1-4 {
 {{legacy}}
   padding-top: {{line-height-quarter-px}}px;
 {{/legacy}}
   padding-top: {{line-height-quarter}}rem;
 }
 
-.pad-bottom-quarter, .pad-b-1-4 {
+.pad-bottom-quarter,
+.pad-b-1-4 {
 {{legacy}}
   padding-bottom: {{line-height-quarter-px}}px;
 {{/legacy}}
@@ -300,22 +340,27 @@ ol {
   padding: {{base-line-height}}rem;
 }
 
-.island-double, .island-2 {
+.island-double,
+.island-2 {
 {{legacy}}
   padding: {{line-height-double-px}}px;
 {{/legacy}}
   padding: {{line-height-double}}rem;
 }
 
-.island-half, .island-1-2 {
+.island-half,
+.island-1-2 {
 {{legacy}}
   padding: {{line-height-half-px}}px;
 {{/legacy}}
   padding: {{line-height-half}}rem;
 }
 
-.island-quarter, .island-1-4,
-td, th, fieldset {
+.island-quarter,
+.island-1-4,
+td,
+th,
+fieldset {
 {{legacy}}
   padding: {{line-height-quarter-px}}px;
 {{/legacy}}
@@ -331,7 +376,8 @@ td, th, fieldset {
   padding-right: {{base-line-height}}rem;
 }
 
-.gutter-double, .gutter-2 {
+.gutter-double,
+.gutter-2 {
 {{legacy}}
   padding-left: {{line-height-double-px}}px;
   padding-right: {{line-height-double-px}}px;
@@ -340,7 +386,8 @@ td, th, fieldset {
   padding-right: {{line-height-double}}rem;
 }
 
-.gutter-half, .gutter-1-2 {
+.gutter-half,
+.gutter-1-2 {
 {{legacy}}
   padding-left: {{line-height-half-px}}px;
   padding-right: {{line-height-half-px}}px;
@@ -349,7 +396,8 @@ td, th, fieldset {
   padding-right: {{line-height-half}}rem;
 }
 
-.gutter-quarter, .gutter-1-4 {
+.gutter-quarter,
+.gutter-1-4 {
 {{legacy}}
   padding-left: {{line-height-quarter-px}}px;
   padding-right: {{line-height-quarter-px}}px;
@@ -362,10 +410,10 @@ td, th, fieldset {
 <script type="text/template" data-template="media-query">
 @media only screen and (min-width: {{min-width}}em) {
 
-html {
-  font-size: {{font-size}}%;
-  line-height: {{line-height}};
-}
+  html {
+    font-size: {{font-size}}%;
+    line-height: {{line-height}};
+  }
 {{css}}
 
 }
