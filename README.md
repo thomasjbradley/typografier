@@ -1,6 +1,6 @@
 # Typografier
 
-[Typografier](http://typografier.web-dev.tools) is a tool that generates a modular & harmonious type system for modern websites.
+[Typografier](https://typografier.web-dev.tools) is a tool that generates a modular & harmonious type system for modern websites.
 
 *I use it on just about every website I create.* For me it’s an alternative to monolithic frameworks like Bootstrap and Foundation.
 
@@ -12,8 +12,8 @@ This modular type system is taught as part of the [Algonquin College Graphic Des
 
 This tool is introduced to the students after they learn the “long, hard, stupid way.”
 
-- [**☛ Type system tutorials & videos**](http://learn-the-web.algonquindesign.ca/topics/modular-typography/)
-- [**☛ Typografier cheat sheet**](http://learn-the-web.algonquindesign.ca/topics/typografier-cheat-sheet/)
+- [**☛ Type system tutorials & videos**](https://learn-the-web.algonquindesign.ca/topics/modular-typography/)
+- [**☛ Typografier cheat sheet**](https://learn-the-web.algonquindesign.ca/topics/typografier-cheat-sheet/)
 
 ---
 

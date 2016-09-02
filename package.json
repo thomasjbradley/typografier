@@ -16,6 +16,8 @@
     "grunt": "grunt",
     "server": "jekyll serve",
     "builder": "grunt",
-    "build": "grunt build"
+    "build": "grunt build",
+    "deploy": "rsync --archive --recursive --delete --delete-excluded --progress --compress --chmod=u=rwX,go=rX ./_site/ keycdn:zones/typografier/",
+    "build-n-deploy": "npm run build && jekyll build && npm run deploy"
   }
 }
