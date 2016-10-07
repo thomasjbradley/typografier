@@ -101,6 +101,8 @@ var typeScales = function (baseFontSize, baseLineHeight, typeScale, hangPunc, te
     'line-height-half-px': convertToPx(Math.round(baseLineHeight / 2)),
     'line-height-quarter': (baseLineHeight / 4).toFixed(4),
     'line-height-quarter-px': convertToPx(Math.round(baseLineHeight / 4)),
+    'line-height-eighth': (baseLineHeight / 8).toFixed(4),
+    'line-height-eighth-px': convertToPx(Math.round(baseLineHeight / 8)),
     'line-height-double': (baseLineHeight * 2).toFixed(4),
     'line-height-double-px': convertToPx(baseLineHeight * 2),
     'type-scale': typeScaleValues.join(''),
