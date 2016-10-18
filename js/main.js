@@ -33,6 +33,14 @@ var $controls = $('#controls');
 var $cssOutput = $('#output');
 var $legacy = $('#legacy');
 
+var removeTrailingLeadingZeros = function (num) {
+  return num.replace(/^0*\./, '.').replace(/\.?0*$/, '');
+};
+
+var formatNumber = function (num) {
+  return removeTrailingLeadingZeros(num.toFixed(4));
+};
+
 var view = function view (name, vals) {
   if (!vals) vals = {};
 
@@ -42,7 +50,7 @@ var view = function view (name, vals) {
 };
 
 var convertToPx = function (val) {
-  return Math.round(val * originalFontSize);
+  return formatNumber(Math.round(val * originalFontSize));
 };
 
 var calculateLineHeight = function (baseLineHeight, power, fontSize) {
@@ -86,9 +94,9 @@ var typeScales = function (baseFontSize, baseLineHeight, typeScale, hangPunc, te
     typeScaleValues.push(
       view('css-element', {
         'selectors': sel.join(',\n'),
-        'font-size': vals.fontSize.toFixed(4),
+        'font-size': formatNumber(vals.fontSize),
         'font-size-px': convertToPx(vals.fontSize),
-        'line-height': vals.lineHeight.toFixed(4),
+        'line-height': formatNumber(vals.lineHeight),
         'line-height-px': convertToPx(vals.lineHeight),
       })
     );
@@ -97,13 +105,13 @@ var typeScales = function (baseFontSize, baseLineHeight, typeScale, hangPunc, te
   css = view(templateView, {
     'base-line-height': baseLineHeight,
     'base-line-height-px': convertToPx(baseLineHeight),
-    'line-height-half': (baseLineHeight / 2).toFixed(4),
+    'line-height-half': formatNumber(baseLineHeight / 2),
     'line-height-half-px': convertToPx(Math.round(baseLineHeight / 2)),
-    'line-height-quarter': (baseLineHeight / 4).toFixed(4),
+    'line-height-quarter': formatNumber(baseLineHeight / 4),
     'line-height-quarter-px': convertToPx(Math.round(baseLineHeight / 4)),
-    'line-height-eighth': (baseLineHeight / 8).toFixed(4),
+    'line-height-eighth': formatNumber(baseLineHeight / 8),
     'line-height-eighth-px': convertToPx(Math.round(baseLineHeight / 8)),
-    'line-height-double': (baseLineHeight * 2).toFixed(4),
+    'line-height-double': formatNumber(baseLineHeight * 2),
     'line-height-double-px': convertToPx(baseLineHeight * 2),
     'type-scale': typeScaleValues.join(''),
     'hang-punc': hangPunc,
