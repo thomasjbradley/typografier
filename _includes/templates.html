@@ -104,6 +104,11 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
   width: 100%;
+  table-layout: fixed;
+}
+
+caption {
+  text-align: left;
 }
 
 th,
@@ -201,7 +206,8 @@ details,
 hr,
 fieldset,
 pre,
-table {
+table,
+caption {
 {{legacy}}
   margin: 0 0 {{base-line-height-px}}px;
 {{/legacy}}
@@ -497,7 +503,8 @@ select {
 }
 
 .gutter-quarter,
-.gutter-1-4 {
+.gutter-1-4,
+caption {
 {{legacy}}
   padding-left: {{line-height-quarter-px}}px;
   padding-right: {{line-height-quarter-px}}px;
