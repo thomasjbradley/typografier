@@ -28,12 +28,15 @@
     img { display: block; width: 100%; height: auto; }
     a { color: steelblue; }
     .table-wrapper { max-width: 100%; position: relative; overflow-x: auto; }
-    table { min-width: 30em; }
+    table { min-width: 36em; }
     footer { color: #666; }
     input, label { cursor: pointer; }
     input { position: relative; top: -0.1em; }
     .typeface-wrap { white-space: nowrap; }
     blockquote { max-width: 35em; margin-left: auto; margin-right: auto; }
+    @media only screen and (min-width: 60em) {
+      .table-wrapper { overflow: visible; }
+    }
   </style>
 </head>
 <body>
