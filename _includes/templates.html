@@ -96,7 +96,7 @@ caption {
 
 hr {
   border: 0;
-  border-top: 1px solid;
+  border-top: 2px solid #000;
   height: 0;
 }
 
@@ -113,13 +113,15 @@ caption {
 
 th,
 td {
-  border-bottom: 1px solid;
+  border-bottom: 1px solid #000;
   text-align: left;
   vertical-align: top;
 }
 
 thead th {
   vertical-align: bottom;
+
+  border-bottom-width: 2px;
 }
 
 .text-left {
@@ -456,8 +458,7 @@ input[type="radio"] {
 .island-quarter,
 .island-1-4,
 td,
-table th,
-fieldset {
+table th {
 {{legacy}}
   padding: {{line-height-quarter-px}}px;
 {{/legacy}}
@@ -467,8 +468,7 @@ fieldset {
 .island-eighth,
 .island-1-8,
 input,
-textarea,
-select {
+textarea {
 {{legacy}}
   padding: {{line-height-eighth-px}}px;
 {{/legacy}}
@@ -523,6 +523,30 @@ caption {
 {{/legacy}}
   padding-left: {{line-height-eighth}}rem;
   padding-right: {{line-height-eighth}}rem;
+}
+
+select {
+{{legacy}}
+  padding: 0 {{line-height-eighth-px}}px;
+{{/legacy}}
+  padding: 0 {{line-height-eighth}}rem;
+}
+
+fieldset {
+{{legacy}}
+  padding: {{line-height-quarter-px}}px 0;
+{{/legacy}}
+  padding: {{line-height-quarter}}rem 0;
+
+  border: 0;
+  border-top: 2px solid #000;
+}
+
+legend {
+{{legacy}}
+  padding-right: {{line-height-quarter-px}}px;
+{{/legacy}}
+  padding-right: {{line-height-quarter}}rem;
 }
 </script>
 
