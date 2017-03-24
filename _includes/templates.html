@@ -172,9 +172,19 @@ thead th {
   width: 100%;
 }
 
+.wrapper-no-center {
+  max-width: 52em;
+  width: 100%;
+}
+
 .max-length {
   margin-left: auto;
   margin-right: auto;
+  max-width: 36em;
+  width: 100%;
+}
+
+.max-length-no-center {
   max-width: 36em;
   width: 100%;
 }
@@ -265,12 +275,12 @@ select {
   height: calc({{base-line-height}}rem + {{line-height-eighth}}rem + {{line-height-eighth}}rem);
 }
 
-input[type="color"] {
+[type="color"] {
   width: calc({{base-line-height}}rem + {{line-height-eighth}}rem + {{line-height-eighth}}rem);
 }
 
-input[type="checkbox"],
-input[type="radio"] {
+[type="checkbox"],
+[type="radio"] {
   display: inline-block;
   height: auto;
   width: auto;
