@@ -282,6 +282,7 @@ select {
 [type="checkbox"],
 [type="radio"] {
   display: inline-block;
+  height: auto;
 }
 
 .push {
@@ -475,7 +476,8 @@ table th {
 
 .island-eighth,
 .island-1-8,
-input,
+input:not([type="checkbox"]),
+input:not([type="radio"]),
 textarea {
 {{legacy}}
   padding: {{line-height-eighth-px}}px;
