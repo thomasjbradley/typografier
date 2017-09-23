@@ -5,6 +5,8 @@ var hashBits;
 var previewWin;
 
 var sizes = [
+  { sel: ['.tena'], power: 9},
+  { sel: ['.nina'], power: 8},
   { sel: ['.yotta'], power: 7},
   { sel: ['.zetta'], power: 6},
   { sel: ['h1', '.exa'], power: 5},
