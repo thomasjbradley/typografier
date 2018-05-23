@@ -109,6 +109,8 @@ var typeScales = function (baseFontSize, baseLineHeight, typeScale, hangPunc, te
   css = view(templateView, {
     'base-line-height': baseLineHeight,
     'base-line-height-px': convertToPx(baseLineHeight),
+    'line-height-three-quarters': formatNumber(baseLineHeight * .75),
+    'line-height-three-quarters-px': convertToPx(Math.round(baseLineHeight * .75)),
     'line-height-half': formatNumber(baseLineHeight / 2),
     'line-height-half-px': convertToPx(Math.round(baseLineHeight / 2)),
     'line-height-quarter': formatNumber(baseLineHeight / 4),
