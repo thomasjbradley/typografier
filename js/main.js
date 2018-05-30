@@ -19,6 +19,8 @@ var sizes = [
   { sel: ['h6', '.kilo', 'input', 'textarea'], power: 0},
   { sel: ['small', '.milli'], power: -1},
   { sel: ['.micro'], power: -2},
+  { sel: ['.nano'], power: -3},
+  { sel: ['.pico'], power: -4},
 ];
 
 var originalFontSize = 16;
