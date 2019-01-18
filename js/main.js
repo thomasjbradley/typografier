@@ -16,7 +16,7 @@ var sizes = [
   { sel: ['h3', '.tera'], power: 3},
   { sel: ['h4', '.giga'], power: 2},
   { sel: ['h5', '.mega'], power: 1},
-  { sel: ['h6', '.kilo', 'input', 'textarea'], power: 0},
+  { sel: ['h6', 'input', 'textarea', '.kilo'], power: 0},
   { sel: ['small', '.milli'], power: -1},
   { sel: ['.micro'], power: -2},
   { sel: ['.nano'], power: -3},
@@ -91,6 +91,7 @@ var calculateValues = function (baseFontSize, baseLineHeight, typeScale, power) 
 
 var typeScales = function (baseFontSize, baseLineHeight, typeScale, hangPunc, templateView) {
   var typeScaleValues = [];
+  var typeScaleVars = [];
   var css = '';
 
   sizes.forEach(function (elem, index, arr) {
@@ -106,6 +107,9 @@ var typeScales = function (baseFontSize, baseLineHeight, typeScale, hangPunc, te
         'line-height-px': convertToPx(vals.lineHeight),
       })
     );
+
+    typeScaleVars.push('  --font-size-' + sel[sel.length - 1].replace('.', '') + ': ' + formatNumber(vals.fontSize) + 'rem;');
+    typeScaleVars.push('  --line-height-' + sel[sel.length - 1].replace('.', '') + ': ' + formatNumber(vals.lineHeight) + 'rem;');
   });
 
   css = view(templateView, {
@@ -128,6 +132,7 @@ var typeScales = function (baseFontSize, baseLineHeight, typeScale, hangPunc, te
     'line-height-double': formatNumber(baseLineHeight * 2),
     'line-height-double-px': convertToPx(baseLineHeight * 2),
     'type-scale': typeScaleValues.join(''),
+    'type-scale-vars': typeScaleVars.join('\n'),
     'hang-punc': hangPunc,
     'not-hang-punc': !hangPunc
   });
